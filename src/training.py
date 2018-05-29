@@ -1,0 +1,1 @@
+"""Train a SegNet model"""
