@@ -13,13 +13,19 @@ class SegNet(nn.Module):
         self.input_channels = input_channels
         self.output_channels = output_channels
 
-        self.features = self.encoder() + self.decoder()
+        self.encoder_features = self.encoder()
+        self.decoder_features = self.decoder()
+
+        self.features = self.encoder_features + self.decoder_features
 
         self.model = nn.Sequential(*self.features)
 
     
     def forward(self, input_img):
-        pass
+        """Forward pass `input_img` through the network"""
+        x = self.features(input_image)
+        
+        return x
 
     
     def encoder(self):
