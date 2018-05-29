@@ -3,10 +3,12 @@ import torch.nn as nn
 
 
 class SegNet(nn.Module):
-    def __init__(self, batch_norm=True):
+    def __init__(self, input_channels, output_channels):
         super(SegNet, self).__init__()
 
-        self.num_channels = 3
+        self.input_channels = input_channels
+        self.output_channels = output_channels
+
         self.features = self.encoder() + self.decoder()
 
         self.model = nn.Sequential(*self.features)
@@ -32,7 +34,7 @@ class SegNet(nn.Module):
 
         # Stage 1
         
-        layers.append(nn.Conv2d(3, 64, kernel_size=3, padding=1))
+        layers.append(nn.Conv2d(self.input_channels, 64, kernel_size=3, padding=1))
         layers.append(nn.BatchNorm2d(64))
         layers.append(nn.ReLU(inplace=True))
 
@@ -196,7 +198,7 @@ class SegNet(nn.Module):
         layers.append(nn.BatchNorm2d(64))
         layers.append(nn.ReLU(inplace=True))
 
-        layers.append(nn.Conv2d(64, 64, kernel_size=3, padding=1))
+        layers.append(nn.Conv2d(64, self.output_channels, kernel_size=3, padding=1))
         layers.append(nn.BatchNorm2d(64))
         layers.append(nn.ReLU(inplace=True))
 
