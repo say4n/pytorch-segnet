@@ -19,9 +19,16 @@ class SegNet(nn.Module):
     def encoder(self):
         """Construct VGG-16 network"""
         layers = []
-        
+
         # int - filter dim, 'M' - max pool
-        vgg16_dims = [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'M', 512, 512, 512, 'M', 512, 512, 512, 'M']
+        vgg16_dims = [
+                        64, 64, 'M',                                    # Stage - 1
+                        128, 128, 'M',                                  # Stage - 2
+                        256, 256, 256,'M',                              # Stage - 3
+                        512, 512, 512, 'M',                             # Stage - 4 
+                        512, 512, 512, 'M'                              # Stage - 5
+                    ]
+
 
         # Stage 1
         
@@ -107,7 +114,94 @@ class SegNet(nn.Module):
         """Decoder part of SegNet"""
         layers = []
 
-        decoder_dims = []
+
+        decoder_dims = [
+                            'M', 512, 512, 512,                     # Stage - 1
+                            'M', 512, 512, 512,                     # Stage - 2
+                            'M', 256, 256, 256,                     # Stage - 3 
+                            'M', 128, 128,                          # Stage - 4
+                            'M', 64, 64                             # Stage - 5
+                        ]
+
+
+        # Stage 1
+
+        layers.append(nn.MaxUnpool2d(kernel_size=2, stride=2))
+
+        layers.append(nn.Conv2d(512, 512, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(512))
+        layers.append(nn.ReLU(inplace=True))
+
+        layers.append(nn.Conv2d(512, 512, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(512))
+        layers.append(nn.ReLU(inplace=True))
+
+        layers.append(nn.Conv2d(512, 512, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(512))
+        layers.append(nn.ReLU(inplace=True))
+
+
+        # Stage 2
+
+        layers.append(nn.MaxUnpool2d(kernel_size=2, stride=2))
+
+        layers.append(nn.Conv2d(512, 512, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(512))
+        layers.append(nn.ReLU(inplace=True))
+
+        layers.append(nn.Conv2d(512, 512, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(512))
+        layers.append(nn.ReLU(inplace=True))
+
+        layers.append(nn.Conv2d(512, 512, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(512))
+        layers.append(nn.ReLU(inplace=True))
+
+
+        # Stage 3
+
+        layers.append(nn.MaxUnpool2d(kernel_size=2, stride=2))
+
+        layers.append(nn.Conv2d(512, 256, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(256))
+        layers.append(nn.ReLU(inplace=True))
+
+        layers.append(nn.Conv2d(256, 256, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(256))
+        layers.append(nn.ReLU(inplace=True))
+
+        layers.append(nn.Conv2d(256, 256, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(256))
+        layers.append(nn.ReLU(inplace=True))
+
+
+        # Stage 4
+
+        layers.append(nn.MaxUnpool2d(kernel_size=2, stride=2))
+
+        layers.append(nn.Conv2d(256, 128, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(128))
+        layers.append(nn.ReLU(inplace=True))
+
+        layers.append(nn.Conv2d(128, 128, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(128))
+        layers.append(nn.ReLU(inplace=True))
+
+
+        # Stage 5
+
+        layers.append(nn.MaxUnpool2d(kernel_size=2, stride=2))
+
+        layers.append(nn.Conv2d(128, 64, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(64))
+        layers.append(nn.ReLU(inplace=True))
+
+        layers.append(nn.Conv2d(64, 64, kernel_size=3, padding=1))
+        layers.append(nn.BatchNorm2d(64))
+        layers.append(nn.ReLU(inplace=True))
+
+
+        return layers
 
 
 
