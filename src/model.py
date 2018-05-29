@@ -65,7 +65,7 @@ class SegNet(nn.Module):
         layers.append(nn.BatchNorm2d(128))
         layers.append(nn.ReLU(inplace=True))
 
-        layers.append(nn.MaxPool2d(kernel_size256=2, stride=2))
+        layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
 
 
         # Stage 3
