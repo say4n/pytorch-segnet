@@ -1,3 +1,7 @@
+"""
+Pytorch implementation of SegNet (https://arxiv.org/pdf/1511.00561.pdf)
+"""
+
 import torch
 import torch.nn as nn
 
