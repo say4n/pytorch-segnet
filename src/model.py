@@ -62,7 +62,7 @@ class SegNet(nn.Module):
         """Decoder part of SegNet"""
         layers = []
 
-
+        # int - filter dim, 'U' - max unpool
         decoder_dims = [
                             'U', 512, 512, 512,                     # Stage - 1
                             'U', 512, 512, 512,                     # Stage - 2
