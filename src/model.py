@@ -153,11 +153,11 @@ class SegNet(nn.Module):
 
         # int - filter dim, 'U' - max unpool
         decoder_dims = [
-                            ('U', 512, 512, 512),                     # Stage - 5
-                            ('U', 512, 512, 512),                     # Stage - 4
-                            ('U', 256, 256, 256),                     # Stage - 3 
-                            ('U', 128, 128),                          # Stage - 2
-                            ('U', 64, 64)                             # Stage - 1
+                            ('U', 512, 512, 512),                         # Stage - 5
+                            ('U', 512, 512, 512),                         # Stage - 4
+                            ('U', 256, 256, 256),                         # Stage - 3 
+                            ('U', 128, 128),                              # Stage - 2
+                            ('U', 64, 64)                                 # Stage - 1
                         ]
 
 
