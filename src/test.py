@@ -3,6 +3,7 @@
 from model import SegNet
 import numpy as np
 import torch
+from __future__ import print_function
 
 
 if __name__ == "__main__":

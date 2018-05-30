@@ -6,6 +6,7 @@ from collections import OrderedDict
 import torch
 import torch.nn as nn
 import pprint
+from __future__ import print_function
 
 F = nn.functional
 DEBUG = False
