@@ -65,6 +65,14 @@ class SegNet(nn.Module):
         x_4, indices_4 = F.max_pool2d(x_42, kernel_size=2, stride=2, return_indices=True)
 
 
+        if DEBUG:
+            print(f"dim_0: {dim_0}, indices_0: {indices_0.size()}")
+            print(f"dim_1: {dim_0}, indices_1: {indices_1.size()}")
+            print(f"dim_2: {dim_0}, indices_2: {indices_2.size()}")
+            print(f"dim_3: {dim_0}, indices_3: {indices_3.size()}")
+            print(f"dim_4: {dim_0}, indices_4: {indices_4.size()}")
+
+
         # Decoder
         
         # Decoder Stage - 5       
@@ -93,13 +101,13 @@ class SegNet(nn.Module):
         # Decoder Stage - 1
         x_0d = F.max_unpool2d(x_10d, indices_0, kernel_size=2, stride=2, output_size=dim_0)
         x_01d = F.relu(self.decoder_layers['decoder_convtr_01'](x_0d))
-        x_00d = F.relu(self.decoder_layers['decoder_convtr_00'](x_01d))
+        x_00d = self.decoder_layers['decoder_convtr_00'](x_01d)
 
         
         return x_00d
 
     
-    def encoder(self):
+    def encoder(self, debug=False):
         """Construct VGG-16 network"""
         layers = OrderedDict()
 
@@ -128,13 +136,15 @@ class SegNet(nn.Module):
                     layers[f"encoder_conv_{stage}{idx}"] = nn.Sequential(*sub_layer)
                     self.num_channels = dim
 
-        if DEBUG:
+        if debug:
+            print(":: ENCODER ::\n")
             pprint.pprint(layers)
+            print("---------------\n\n")
 
         return layers
 
 
-    def decoder(self):
+    def decoder(self, debug=False):
         """Decoder part of SegNet"""
         layers = OrderedDict()
 
@@ -154,24 +164,32 @@ class SegNet(nn.Module):
                     layers[f"decoder_unpool_{len(decoder_dims) - stage - 1}"] = nn.MaxUnpool2d(kernel_size=2, stride=2)
                 else:
                     sub_layer = []
+                    try:
+                        out_c = block[idx+1] if idx + 1 != len(block) else decoder_dims[stage+1][1]
+                    except IndexError:
+                        pass
+
                     if stage == len(decoder_dims) - 1 and idx == len(block) - 1:
                         sub_layer.append(nn.ConvTranspose2d(in_channels=self.num_channels,
-                                                    out_channels=self.output_channels,
-                                                    kernel_size=3,
-                                                    padding=1))
+                                                            out_channels=self.output_channels,
+                                                            kernel_size=3,
+                                                            padding=1))
                     else:
                         sub_layer.append(nn.ConvTranspose2d(in_channels=self.num_channels,
-                                                    out_channels=dim,
-                                                    kernel_size=3,
-                                                    padding=1))
-                    sub_layer.append(nn.BatchNorm2d(dim))
-                    # sub_layer.append(nn.ReLU(inplace=True))
+                                                            out_channels=out_c,
+                                                            kernel_size=3,
+                                                            padding=1))
+                        sub_layer.append(nn.BatchNorm2d(out_c))
+                    sub_layer.append(nn.ReLU(inplace=True))
 
 
                     layers[f"decoder_convtr_{len(decoder_dims) - stage - 1}{len(block) - idx - 1}"] = nn.Sequential(*sub_layer)
-                    self.num_channels = dim
+                    
+                    self.num_channels = out_c
 
-        if DEBUG:
+        if debug:
+            print(":: DECODER ::\n")
             pprint.pprint(layers)
+            print("---------------\n\n")
 
         return layers
