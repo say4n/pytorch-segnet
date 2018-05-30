@@ -103,8 +103,10 @@ class SegNet(nn.Module):
         x_01d = F.relu(self.decoder_layers['decoder_convtr_01'](x_0d))
         x_00d = self.decoder_layers['decoder_convtr_00'](x_01d)
 
+        x_softmax = F.softmax(x_00d)
+
         
-        return x_00d
+        return x_00d, x_softmax
 
     
     def encoder(self, debug=False):

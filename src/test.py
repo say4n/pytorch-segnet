@@ -15,6 +15,7 @@ if __name__ == "__main__":
     model = SegNet(input_channels=input_channels, output_channels=output_channels)
 
     img = torch.zeros((1, 3, 224, 224))
-    output = model(img)
+    output, softmaxed_output = model(img)
 
-    print(output)
+    print(output.size())
+    print(softmaxed_output.size())
