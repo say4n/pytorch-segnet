@@ -67,30 +67,30 @@ class SegNet(nn.Module):
 
         # Decoder
         
-        # DEcoder Stage - 5       
+        # Decoder Stage - 5       
         x = self.decoder_layers['decoder_unpool_4'](x, indices_4, output_size=dim_4)
         x = self.decoder_layers['decoder_convtr_42'](x)
         x = self.decoder_layers['decoder_convtr_41'](x)
         x = self.decoder_layers['decoder_convtr_40'](x)
         
-        # DEcoder Stage - 4
+        # Decoder Stage - 4
         x = self.decoder_layers['decoder_unpool_3'](x, indices_3, output_size=dim_3)
         x = self.decoder_layers['decoder_convtr_32'](x)
         x = self.decoder_layers['decoder_convtr_31'](x)
         x = self.decoder_layers['decoder_convtr_30'](x)
         
-        # DEcoder Stage - 3
+        # Decoder Stage - 3
         x = self.decoder_layers['decoder_unpool_2'](x, indices_2, output_size=dim_2)
         x = self.decoder_layers['decoder_convtr_22'](x)
         x = self.decoder_layers['decoder_convtr_21'](x)
         x = self.decoder_layers['decoder_convtr_20'](x)
         
-        # DEcoder Stage - 2
+        # Decoder Stage - 2
         x = self.decoder_layers['decoder_unpool_1'](x, indices_1, output_size=dim_1)
         x = self.decoder_layers['decoder_convtr_11'](x)
         x = self.decoder_layers['decoder_convtr_10'](x)
         
-        # DEcoder Stage - 1
+        # Decoder Stage - 1
         x = self.decoder_layers['decoder_unpool_0'](x, indices_0, output_size=dim_0)
         x = self.decoder_layers['decoder_convtr_01'](x)
         x = self.decoder_layers['decoder_convtr_00'](x)
