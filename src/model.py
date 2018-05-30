@@ -103,7 +103,7 @@ class SegNet(nn.Module):
         x_01d = F.relu(self.decoder_layers['decoder_convtr_01'](x_0d))
         x_00d = self.decoder_layers['decoder_convtr_00'](x_01d)
 
-        x_softmax = F.softmax(x_00d)
+        x_softmax = F.softmax(x_00d, dim=1)
 
         
         return x_00d, x_softmax
@@ -134,8 +134,8 @@ class SegNet(nn.Module):
                     sub_layer.append(nn.BatchNorm2d(dim))
                     # sub_layer.append(nn.ReLU(inplace=True))
 
-                    
-                    layers[f"encoder_conv_{stage}{idx}"] = nn.Sequential(*sub_layer)
+                    key = "encoder_conv_{}{}".format(stage, idx)
+                    layers[key] = nn.Sequential(*sub_layer)
                     self.num_channels = dim
 
         if debug:
@@ -163,7 +163,8 @@ class SegNet(nn.Module):
         for stage, block in enumerate(decoder_dims):
             for idx, dim in enumerate(block):
                 if dim == 'U':
-                    layers[f"decoder_unpool_{len(decoder_dims) - stage - 1}"] = nn.MaxUnpool2d(kernel_size=2, stride=2)
+                    key = "decoder_unpool_{}".format(len(decoder_dims) - stage - 1)
+                    layers[key] = nn.MaxUnpool2d(kernel_size=2, stride=2)
                 else:
                     sub_layer = []
                     try:
@@ -184,8 +185,8 @@ class SegNet(nn.Module):
                         sub_layer.append(nn.BatchNorm2d(out_c))
                     sub_layer.append(nn.ReLU(inplace=True))
 
-
-                    layers[f"decoder_convtr_{len(decoder_dims) - stage - 1}{len(block) - idx - 1}"] = nn.Sequential(*sub_layer)
+                    key = "decoder_convtr_{}{}".format(len(decoder_dims) - stage - 1, len(block) - idx - 1)
+                    layers[key] = nn.Sequential(*sub_layer)
                     
                     self.num_channels = out_c
 
