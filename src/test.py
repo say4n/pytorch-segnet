@@ -19,3 +19,6 @@ if __name__ == "__main__":
 
     print(output.size())
     print(softmaxed_output.size())
+
+    print(output[0,:,0,0])
+    print(softmaxed_output[0,:,0,0].sum())
