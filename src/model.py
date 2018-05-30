@@ -32,8 +32,8 @@ class SegNet(nn.Module):
         # Encoder
         
         # Encoder Stage - 1        
-        dim_0 = input_image.size()
-        x_00 = F.relu(self.encoder_layers['encoder_conv_00'](input_image))
+        dim_0 = input_img.size()
+        x_00 = F.relu(self.encoder_layers['encoder_conv_00'](input_img))
         x_01 = F.relu(self.encoder_layers['encoder_conv_01'](x_00))
         x_0, indices_0 = F.max_pool2d(x_01, kernel_size=2, stride=2, return_indices=True)
         
