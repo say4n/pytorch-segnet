@@ -30,14 +30,73 @@ class SegNet(nn.Module):
         """Forward pass `input_img` through the network"""
 
         # Encoder
+        
+        # Encoder Stage - 1        
         dim_0 = input_image.size()
+        x = self.encoder_layers['encoder_conv_00'](input_image)
+        x = self.encoder_layers['encoder_conv_01'](x)
+        x, indices_0 = self.encoder_layers['encoder_maxpool_0'](x)
+        
+        # Encoder Stage - 2
+        dim_1 = x.size()
+        x = self.encoder_layers['encoder_conv_10'](x)
+        x = self.encoder_layers['encoder_conv_11'](x)
+        x, indices_1 = self.encoder_layers['encoder_maxpool_1'](x)
+        
+        # Encoder Stage - 3
+        dim_2 = x.size()
+        x = self.encoder_layers['encoder_conv_20'](x)
+        x = self.encoder_layers['encoder_conv_21'](x)
+        x = self.encoder_layers['encoder_conv_22'](x)
+        x, indices_2 = self.encoder_layers['encoder_maxpool_2'](x)
+        
+        # Encoder Stage - 4
+        dim_3 = x.size()
+        x = self.encoder_layers['encoder_conv_30'](x)
+        x = self.encoder_layers['encoder_conv_31'](x)
+        x = self.encoder_layers['encoder_conv_32'](x)
+        x, indices_3 = self.encoder_layers['encoder_maxpool_3'](x)
+        
+        # Encoder Stage - 5
+        dim_4 = x.size()
+        x = self.encoder_layers['encoder_conv_40'](x)
+        x = self.encoder_layers['encoder_conv_41'](x)
+        x = self.encoder_layers['encoder_conv_42'](x)
+        x, indices_4 = self.encoder_layers['encoder_maxpool_4'](x)
 
 
         # Decoder
-
+        
+        # DEcoder Stage - 5       
+        x = self.decoder_layers['decoder_unpool_4'](x, indices_4, output_size=dim_4)
+        x = self.decoder_layers['decoder_convtr_42'](x)
+        x = self.decoder_layers['decoder_convtr_41'](x)
+        x = self.decoder_layers['decoder_convtr_40'](x)
+        
+        # DEcoder Stage - 4
+        x = self.decoder_layers['decoder_unpool_3'](x, indices_3, output_size=dim_3)
+        x = self.decoder_layers['decoder_convtr_32'](x)
+        x = self.decoder_layers['decoder_convtr_31'](x)
+        x = self.decoder_layers['decoder_convtr_30'](x)
+        
+        # DEcoder Stage - 3
+        x = self.decoder_layers['decoder_unpool_2'](x, indices_2, output_size=dim_2)
+        x = self.decoder_layers['decoder_convtr_22'](x)
+        x = self.decoder_layers['decoder_convtr_21'](x)
+        x = self.decoder_layers['decoder_convtr_20'](x)
+        
+        # DEcoder Stage - 2
+        x = self.decoder_layers['decoder_unpool_1'](x, indices_1, output_size=dim_1)
+        x = self.decoder_layers['decoder_convtr_11'](x)
+        x = self.decoder_layers['decoder_convtr_10'](x)
+        
+        # DEcoder Stage - 1
+        x = self.decoder_layers['decoder_unpool_0'](x, indices_0, output_size=dim_0)
+        x = self.decoder_layers['decoder_convtr_01'](x)
+        x = self.decoder_layers['decoder_convtr_00'](x)
 
         
-        return input_image
+        return x
 
     
     def encoder(self):
@@ -57,7 +116,7 @@ class SegNet(nn.Module):
         for stage, block in enumerate(vgg16_dims):
             for idx, dim in enumerate(block):
                 if dim == 'M':
-                    layers[f"encoder_maxpool_{stage}{idx}"] = nn.MaxPool2d(kernel_size=2, stride=2, return_indices=True)
+                    layers[f"encoder_maxpool_{stage}"] = nn.MaxPool2d(kernel_size=2, stride=2, return_indices=True)
                 else:
                     sub_layers = []
                     sub_layers.append(nn.Conv2d(in_channels=self.num_channels,
@@ -94,7 +153,7 @@ class SegNet(nn.Module):
         for stage, block in enumerate(decoder_dims):
             for idx, dim in enumerate(block):
                 if dim == 'U':
-                    layers[f"decoder_{len(decoder_dims) - stage - 1}_unpool"] = nn.MaxUnpool2d(kernel_size=2, stride=2)
+                    layers[f"decoder_unpool_{len(decoder_dims) - stage - 1}"] = nn.MaxUnpool2d(kernel_size=2, stride=2)
                 else:
                     sub_layers = []
                     if stage == len(decoder_dims) - 1 and idx == len(block) - 1:
@@ -111,7 +170,7 @@ class SegNet(nn.Module):
                     sub_layers.append(nn.ReLU(inplace=True))
 
 
-                    layers[f"decoder_conv_{len(decoder_dims) - stage - 1}{idx}"] = nn.Sequential(*sub_layers)
+                    layers[f"decoder_convtr_{len(decoder_dims) - stage - 1}{len(block) - idx - 1}"] = nn.Sequential(*sub_layers)
                     self.num_channels = dim
 
         if DEBUG:
