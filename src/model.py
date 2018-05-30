@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 import pprint
 
-
+F = nn.functional
 DEBUG = False
 
 
@@ -33,70 +33,70 @@ class SegNet(nn.Module):
         
         # Encoder Stage - 1        
         dim_0 = input_image.size()
-        x = self.encoder_layers['encoder_conv_00'](input_image)
-        x = self.encoder_layers['encoder_conv_01'](x)
-        x, indices_0 = self.encoder_layers['encoder_maxpool_0'](x)
+        x_00 = F.relu(self.encoder_layers['encoder_conv_00'](input_image))
+        x_01 = F.relu(self.encoder_layers['encoder_conv_01'](x_00))
+        x_0, indices_0 = F.max_pool2d(kernel_size=2, stride=2, return_indices=True)(x_01)
         
         # Encoder Stage - 2
-        dim_1 = x.size()
-        x = self.encoder_layers['encoder_conv_10'](x)
-        x = self.encoder_layers['encoder_conv_11'](x)
-        x, indices_1 = self.encoder_layers['encoder_maxpool_1'](x)
+        dim_1 = x_0.size()
+        x_10 = F.relu(self.encoder_layers['encoder_conv_10'](x_0))
+        x_11 = F.relu(self.encoder_layers['encoder_conv_11'](x_10))
+        x_1, indices_1 = self.encoder_layers['encoder_maxpool_1'](x_11)
         
         # Encoder Stage - 3
-        dim_2 = x.size()
-        x = self.encoder_layers['encoder_conv_20'](x)
-        x = self.encoder_layers['encoder_conv_21'](x)
-        x = self.encoder_layers['encoder_conv_22'](x)
-        x, indices_2 = self.encoder_layers['encoder_maxpool_2'](x)
+        dim_2 = x_1.size()
+        x_20 = F.relu(self.encoder_layers['encoder_conv_20'](x_1))
+        x_21 = F.relu(self.encoder_layers['encoder_conv_21'](x_20))
+        x_22 = F.relu(self.encoder_layers['encoder_conv_22'](x_21))
+        x_2, indices_2 = self.encoder_layers['encoder_maxpool_2'](x_22)
         
         # Encoder Stage - 4
-        dim_3 = x.size()
-        x = self.encoder_layers['encoder_conv_30'](x)
-        x = self.encoder_layers['encoder_conv_31'](x)
-        x = self.encoder_layers['encoder_conv_32'](x)
-        x, indices_3 = self.encoder_layers['encoder_maxpool_3'](x)
+        dim_3 = x_2.size()
+        x_30 = F.relu(self.encoder_layers['encoder_conv_30'](x_2))
+        x_31 = F.relu(self.encoder_layers['encoder_conv_31'](x_30))
+        x_32 = F.relu(self.encoder_layers['encoder_conv_32'](x_31))
+        x_3, indices_3 = self.encoder_layers['encoder_maxpool_3'](x_32)
         
         # Encoder Stage - 5
-        dim_4 = x.size()
-        x = self.encoder_layers['encoder_conv_40'](x)
-        x = self.encoder_layers['encoder_conv_41'](x)
-        x = self.encoder_layers['encoder_conv_42'](x)
-        x, indices_4 = self.encoder_layers['encoder_maxpool_4'](x)
+        dim_4 = x_3.size()
+        x_40 = F.relu(self.encoder_layers['encoder_conv_40'](x_3))
+        x_41 = F.relu(self.encoder_layers['encoder_conv_41'](x_40))
+        x_42 = F.relu(self.encoder_layers['encoder_conv_42'](x_41))
+        x_4, indices_4 = self.encoder_layers['encoder_maxpool_4'](x_42)
 
 
         # Decoder
         
         # Decoder Stage - 5       
-        x = self.decoder_layers['decoder_unpool_4'](x, indices_4, output_size=dim_4)
-        x = self.decoder_layers['decoder_convtr_42'](x)
-        x = self.decoder_layers['decoder_convtr_41'](x)
-        x = self.decoder_layers['decoder_convtr_40'](x)
+        x_4d = self.decoder_layers['decoder_unpool_4'](x_4, indices_4, output_size=dim_4)
+        x_42d = F.relu(self.decoder_layers['decoder_convtr_42'](x_4d))
+        x_41d = F.relu(self.decoder_layers['decoder_convtr_41'](x_42d))
+        x_40d = F.relu(self.decoder_layers['decoder_convtr_40'](x_41d))
         
         # Decoder Stage - 4
-        x = self.decoder_layers['decoder_unpool_3'](x, indices_3, output_size=dim_3)
-        x = self.decoder_layers['decoder_convtr_32'](x)
-        x = self.decoder_layers['decoder_convtr_31'](x)
-        x = self.decoder_layers['decoder_convtr_30'](x)
+        x_3d = self.decoder_layers['decoder_unpool_3'](x_40d, indices_3, output_size=dim_3)
+        x_32d = F.relu(self.decoder_layers['decoder_convtr_32'](x_3d))
+        x_31d = F.relu(self.decoder_layers['decoder_convtr_31'](x_32d))
+        x_30d = F.relu(self.decoder_layers['decoder_convtr_30'](x_31d))
         
         # Decoder Stage - 3
-        x = self.decoder_layers['decoder_unpool_2'](x, indices_2, output_size=dim_2)
-        x = self.decoder_layers['decoder_convtr_22'](x)
-        x = self.decoder_layers['decoder_convtr_21'](x)
-        x = self.decoder_layers['decoder_convtr_20'](x)
+        x_2d = self.decoder_layers['decoder_unpool_2'](x_30d, indices_2, output_size=dim_2)
+        x_22d = F.relu(self.decoder_layers['decoder_convtr_22'](x_2d))
+        x_21d = F.relu(self.decoder_layers['decoder_convtr_21'](x_22d))
+        x_20d = F.relu(self.decoder_layers['decoder_convtr_20'](x_21d))
         
         # Decoder Stage - 2
-        x = self.decoder_layers['decoder_unpool_1'](x, indices_1, output_size=dim_1)
-        x = self.decoder_layers['decoder_convtr_11'](x)
-        x = self.decoder_layers['decoder_convtr_10'](x)
+        x_1d = self.decoder_layers['decoder_unpool_1'](x_20d, indices_1, output_size=dim_1)
+        x_11d = F.relu(self.decoder_layers['decoder_convtr_11'](x_1d))
+        x_10d = F.relu(self.decoder_layers['decoder_convtr_10'](x_11d))
         
         # Decoder Stage - 1
-        x = self.decoder_layers['decoder_unpool_0'](x, indices_0, output_size=dim_0)
-        x = self.decoder_layers['decoder_convtr_01'](x)
-        x = self.decoder_layers['decoder_convtr_00'](x)
+        x_0d = self.decoder_layers['decoder_unpool_0'](x_10d, indices_0, output_size=dim_0)
+        x_01d = F.relu(self.decoder_layers['decoder_convtr_01'](x_0d))
+        x_00d = F.relu(self.decoder_layers['decoder_convtr_00'](x_01d))
 
         
-        return x
+        return x_00d
 
     
     def encoder(self):
@@ -115,19 +115,17 @@ class SegNet(nn.Module):
 
         for stage, block in enumerate(vgg16_dims):
             for idx, dim in enumerate(block):
-                if dim == 'M':
-                    layers[f"encoder_maxpool_{stage}"] = nn.MaxPool2d(kernel_size=2, stride=2, return_indices=True)
-                else:
-                    sub_layers = []
-                    sub_layers.append(nn.Conv2d(in_channels=self.num_channels,
+                if dim != 'M':
+                    sub_layer = []
+                    sub_layer.append(nn.Conv2d(in_channels=self.num_channels,
                                                 out_channels=dim,
                                                 kernel_size=3,
                                                 padding=1))
-                    sub_layers.append(nn.BatchNorm2d(dim))
-                    sub_layers.append(nn.ReLU(inplace=True))
+                    sub_layer.append(nn.BatchNorm2d(dim))
+                    # sub_layer.append(nn.ReLU(inplace=True))
 
                     
-                    layers[f"encoder_conv_{stage}{idx}"] = nn.Sequential(*sub_layers)
+                    layers[f"encoder_conv_{stage}{idx}"] = nn.Sequential(*sub_layer)
                     self.num_channels = dim
 
         if DEBUG:
@@ -155,22 +153,22 @@ class SegNet(nn.Module):
                 if dim == 'U':
                     layers[f"decoder_unpool_{len(decoder_dims) - stage - 1}"] = nn.MaxUnpool2d(kernel_size=2, stride=2)
                 else:
-                    sub_layers = []
+                    sub_layer = []
                     if stage == len(decoder_dims) - 1 and idx == len(block) - 1:
-                        sub_layers.append(nn.ConvTranspose2d(in_channels=self.num_channels,
+                        sub_layer.append(nn.ConvTranspose2d(in_channels=self.num_channels,
                                                     out_channels=self.output_channels,
                                                     kernel_size=3,
                                                     padding=1))
                     else:
-                        sub_layers.append(nn.ConvTranspose2d(in_channels=self.num_channels,
+                        sub_layer.append(nn.ConvTranspose2d(in_channels=self.num_channels,
                                                     out_channels=dim,
                                                     kernel_size=3,
                                                     padding=1))
-                    sub_layers.append(nn.BatchNorm2d(dim))
-                    sub_layers.append(nn.ReLU(inplace=True))
+                    sub_layer.append(nn.BatchNorm2d(dim))
+                    # sub_layer.append(nn.ReLU(inplace=True))
 
 
-                    layers[f"decoder_convtr_{len(decoder_dims) - stage - 1}{len(block) - idx - 1}"] = nn.Sequential(*sub_layers)
+                    layers[f"decoder_convtr_{len(decoder_dims) - stage - 1}{len(block) - idx - 1}"] = nn.Sequential(*sub_layer)
                     self.num_channels = dim
 
         if DEBUG:
