@@ -66,11 +66,11 @@ class SegNet(nn.Module):
 
 
         if DEBUG:
-            print(f"dim_0: {dim_0}, indices_0: {indices_0.size()}")
-            print(f"dim_1: {dim_0}, indices_1: {indices_1.size()}")
-            print(f"dim_2: {dim_0}, indices_2: {indices_2.size()}")
-            print(f"dim_3: {dim_0}, indices_3: {indices_3.size()}")
-            print(f"dim_4: {dim_0}, indices_4: {indices_4.size()}")
+            print("dim_0: {}, indices_0: {}".format(dim_0, indices_0.size()))
+            print("dim_1: {}, indices_1: {}".format(dim_1, indices_1.size()))
+            print("dim_2: {}, indices_2: {}".format(dim_2, indices_2.size()))
+            print("dim_3: {}, indices_3: {}".format(dim_3, indices_3.size()))
+            print("dim_4: {}, indices_4: {}".format(dim_4, indices_4.size()))
 
 
         # Decoder
