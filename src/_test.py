@@ -7,10 +7,10 @@ import torch
 
 
 if __name__ == "__main__":
-    # RGB
+    # RGB input
     input_channels = 3
-    # Num classes
-    output_channels = 10
+    # RGB output
+    output_channels = 3
 
     # Model
     model = SegNet(input_channels=input_channels, output_channels=output_channels)
