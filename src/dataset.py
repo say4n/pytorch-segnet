@@ -10,7 +10,7 @@ from PIL import Image
 class PascalVOCDataset(Dataset):
     """Pascal VOC 2007 Dataset"""
     def __init__(self, list_file, img_dir, mask_dir, transform=None):
-        self.images = open(list_file, "rt").read().split("\n")
+        self.images = open(list_file, "rt").read().split("\n")[:-1]
         self.transform = transform
 
         self.img_extension = ".jpg"
