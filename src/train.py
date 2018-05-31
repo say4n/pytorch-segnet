@@ -72,6 +72,8 @@ optimizer = torch.optim.SGD(model.parameters(),
 model.train()
 
 for epoch in range(NUM_EPOCHS):
+    loss_f = 0
+    
     for i_batch, batch in enumerate(train_dataset):
         t_start = time.time()
 
@@ -90,9 +92,9 @@ for epoch in range(NUM_EPOCHS):
         loss.backward()
         optimizer.step()
 
-        loss_f = loss.float()
+        loss_f += loss.float()
         prediction_f = predicted_tensor.float()
         
         delta = time.time() - t_start
 
-        print("Epoch #{}\tTime = {:.2f} s\nLoss = {:.6f}".format(i_batch+1, loss_f, delta))
+    print("Epoch #{}\tLoss = {:.6f}".format(epoch+1, loss_f))
