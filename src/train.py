@@ -14,9 +14,9 @@ import torchvision.transforms as transforms
 NUM_INPUT_CHANNELS = 3
 NUM_OUTPUT_CHANNELS = 1
 
-NUM_EPOCHS = 10
+NUM_EPOCHS = 100
 
-LEARNING_RATE = 0.01
+LEARNING_RATE = 0.03
 MOMENTUM = 0.9
 
 CUDA = True
@@ -73,10 +73,9 @@ model.train()
 
 for epoch in range(NUM_EPOCHS):
     loss_f = 0
+    t_start = time.time()
     
     for i_batch, batch in enumerate(train_dataset):
-        t_start = time.time()
-
         input_tensor = torch.autograd.Variable(batch['image'].view((1,3,224,224)))
         target_tensor = torch.autograd.Variable(batch['mask'].view((1,1,224,224)))
 
@@ -95,6 +94,6 @@ for epoch in range(NUM_EPOCHS):
         loss_f += loss.float()
         prediction_f = predicted_tensor.float()
         
-        delta = time.time() - t_start
+    delta = time.time() - t_start
 
-    print("Epoch #{}\tLoss = {:.6f}".format(epoch+1, loss_f))
+    print("Epoch #{}\tLoss: {:.6f}\t Time: {} s".format(epoch+1, loss_f, delta))
