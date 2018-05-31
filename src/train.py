@@ -14,7 +14,7 @@ import torchvision.transforms as transforms
 NUM_INPUT_CHANNELS = 3
 NUM_OUTPUT_CHANNELS = 1
 
-NUM_EPOCHS = 10
+NUM_EPOCHS = 1000
 
 LEARNING_RATE = 0.03
 MOMENTUM = 0.9
@@ -108,4 +108,4 @@ for epoch in range(NUM_EPOCHS):
     if is_better:
         torch.save(model.state_dict(), "model_best.pth")
 
-    print("Epoch #{}\tLoss: {:.6f}\t Time: {} s".format(epoch+1, loss_f, delta))
+    print("Epoch #{}\tLoss: {:.8f}\t Time: {:2f}s".format(epoch+1, loss_f, delta))
