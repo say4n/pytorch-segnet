@@ -14,10 +14,9 @@ import torchvision.transforms as transforms
 NUM_INPUT_CHANNELS = 3
 NUM_OUTPUT_CHANNELS = 1
 
-NUM_EPOCHS = 100
+NUM_EPOCHS = 10
 
-LEARNING_RATE = 0.05
-MOMENTUM = 0.9
+LEARNING_RATE = 0.003
 
 CUDA = True
 GPU_ID = 0
@@ -64,12 +63,15 @@ else:
                    output_channels=NUM_OUTPUT_CHANNELS)
 
 criterion = torch.nn.MSELoss()
-optimizer = torch.optim.SGD(model.parameters(),
-                            lr=LEARNING_RATE, 
-                            momentum=MOMENTUM)
+optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
+
+
+
 
 is_better = True
 prev_loss = float('inf')
+
+
 
 model.train()
 
