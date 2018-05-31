@@ -22,7 +22,7 @@ MOMENTUM = 0.9
 CUDA = True
 
 
-data_root = os.path.join(os.path.sep, "nfs4", "intern_sayan", "data", "VOCdevkit", "VOC2007")
+data_root = os.path.join("data", "VOCdevkit", "VOC2007")
 train_path = os.path.join(data_root,"ImageSets", "Segmentation", "train.txt")
 val_path = os.path.join(data_root, "ImageSets", "Segmentation", "val.txt")
 img_dir = os.path.join(data_root, "JPEGImages")
