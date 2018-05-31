@@ -16,7 +16,7 @@ NUM_OUTPUT_CHANNELS = 1
 
 NUM_EPOCHS = 10
 
-LEARNING_RATE = 0.01
+LEARNING_RATE = 0.05
 
 CUDA = True
 GPU_ID = 0
@@ -63,7 +63,9 @@ else:
                    output_channels=NUM_OUTPUT_CHANNELS)
 
 criterion = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
+optimizer = torch.optim.SGD(model.parameters(),
+                            lr=LEARNING_RATE, 
+                            momentum=MOMENTUM)
 
 
 
