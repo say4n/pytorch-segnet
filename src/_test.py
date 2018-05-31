@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 from model import SegNet
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
@@ -17,8 +18,19 @@ if __name__ == "__main__":
 
     print(model)
 
-    img = torch.zeros((1, 3, 224, 224))
+    img = torch.randn([1, 3, 224, 224])
+    
+    # plt.imshow(np.transpose(img.numpy()[0,:,:,:],
+    #                         (1, 2, 0)))
+    # plt.show()
+
     output, softmaxed_output = model(img)
+    
+
+    # plt.imshow(np.transpose(output.detach().numpy()[0,:,:,:],
+    #                         (1, 2, 0)))
+    # plt.show()
+
 
     print(output.size())
     print(softmaxed_output.size())
