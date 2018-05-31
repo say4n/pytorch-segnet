@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     print(model)
 
-    img = torch.randn([1, 3, 224, 224])
+    img = torch.randn([4, 3, 224, 224])
     
     # plt.imshow(np.transpose(img.numpy()[0,:,:,:],
     #                         (1, 2, 0)))

@@ -14,12 +14,13 @@ import torchvision.transforms as transforms
 NUM_INPUT_CHANNELS = 3
 NUM_OUTPUT_CHANNELS = 1
 
-NUM_EPOCHS = 10
+NUM_EPOCHS = 2000
 
-LEARNING_RATE = 0.05
+LEARNING_RATE = 0.03
 MOMENTUM = 0.9
+BATCH_SIZE = 50
 
-CUDA = True
+CUDA = False
 GPU_ID = 0
 
 
@@ -38,7 +39,7 @@ train_dataset = PascalVOCDataset(list_file=train_path,
                                  transform=image_transform)
 
 train_dataloader = DataLoader(train_dataset,
-                              batch_size=1,
+                              batch_size=BATCH_SIZE,
                               shuffle=True, 
                               num_workers=4)
 
@@ -49,7 +50,7 @@ val_dataset = PascalVOCDataset(list_file=val_path,
                                transform=image_transform)
 
 val_data = DataLoader(val_dataset,
-                      batch_size=1,
+                      batch_size=BATCH_SIZE,
                       shuffle=True,
                       num_workers=4)
 
@@ -82,9 +83,9 @@ for epoch in range(NUM_EPOCHS):
     loss_f = 0
     t_start = time.time()
     
-    for i_batch, batch in enumerate(train_dataset):
-        input_tensor = torch.autograd.Variable(batch['image'].view((1,3,224,224)))
-        target_tensor = torch.autograd.Variable(batch['mask'].view((1,1,224,224)))
+    for batch in train_dataloader:
+        input_tensor = torch.autograd.Variable(batch['image'].view((BATCH_SIZE, 3, 224, 224)))
+        target_tensor = torch.autograd.Variable(batch['mask'].view((BATCH_SIZE, 1, 224, 224)))
 
         if CUDA:
             input_tensor = input_tensor.cuda(GPU_ID)
