@@ -68,7 +68,8 @@ optimizer = torch.optim.SGD(model.parameters(),
                             lr=LEARNING_RATE, 
                             momentum=MOMENTUM)
 
-
+is_better = True
+prev_loss = float('inf')
 
 model.train()
 
@@ -96,5 +97,9 @@ for epoch in range(NUM_EPOCHS):
         prediction_f = predicted_tensor.float()
         
     delta = time.time() - t_start
+    is_better = loss_f < prev_loss
+
+    if is_better:
+        model.save_state_dict('model_best.pth')
 
     print("Epoch #{}\tLoss: {:.6f}\t Time: {} s".format(epoch+1, loss_f, delta))
