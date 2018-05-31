@@ -20,6 +20,7 @@ LEARNING_RATE = 0.05
 MOMENTUM = 0.9
 
 CUDA = True
+GPU_ID = 0
 
 
 data_root = os.path.join("data", "VOCdevkit", "VOC2007")
@@ -57,7 +58,7 @@ val_data = DataLoader(val_dataset,
 
 if CUDA:
     model = SegNet(input_channels=NUM_INPUT_CHANNELS,
-                   output_channels=NUM_OUTPUT_CHANNELS).cuda()
+                   output_channels=NUM_OUTPUT_CHANNELS).cuda(GPU_ID)
 else:
     model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                    output_channels=NUM_OUTPUT_CHANNELS)
@@ -80,8 +81,8 @@ for epoch in range(NUM_EPOCHS):
         target_tensor = torch.autograd.Variable(batch['mask'].view((1,1,224,224)))
 
         if CUDA:
-            input_tensor = input_tensor.cuda()
-            target_tensor = target_tensor.cuda()
+            input_tensor = input_tensor.cuda(GPU_ID)
+            target_tensor = target_tensor.cuda(GPU_ID)
 
         predicted_tensor, softmaxed_tensor = model(input_tensor)
 
