@@ -6,19 +6,21 @@ import time
 
 
 # Constants
-NUM_CHANNELS = 3
-NUM_CLASSES = 10
+NUM_INPUT_CHANNELS = 3
+NUM_OUTPUT_CHANNELS = 3
 NUM_EPOCHS = 10
+LEARNING_RATE = 0.01
+MOMENTUM = 0.9
 
-model = SigNet(input_channels=NUM_CHANNELS, output_channels=NUM_CLASSES)
+
+model = SigNet(input_channels=NUM_INPUT_CHANNELS, output_channels=NUM_OUTPUT_CHANNELS)
 
 # TODO - create dataloaders
 train_data = None
 val_data = None
-# TODO - choose loss function
-loss = None
-# TODO - choose optimiser
-optimiser = None
+
+criterion = torch.nn.MSELoss()
+optimiser = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM)
 
 
 
@@ -33,7 +35,7 @@ for epoch in range(NUM_EPOCHS):
 
         predicted_tensor = model(input_var)
 
-        loss = optimiser(predicted_tensor, target_tensor)
+        loss = criterion(predicted_tensor, target_tensor)
 
         optimizer.zero_grad()
         loss.backward()
