@@ -26,7 +26,12 @@ class PascalVOCDataset(Dataset):
         image = self.load_image(path=image_path)
         gt_mask = self.load_image(path=mask_path)
 
-        return image, gt_mask
+        values = {
+                    'image': image,
+                    'mask' : gt_mask
+                    }
+
+        return values
 
     def load_image(self, path=None):
         return Image.open(path)
@@ -42,7 +47,7 @@ if __name__ == "__main__":
     objects_dataset = PascalVOCDataset(list_file=list_file_path, img_dir=img_dir, mask_dir=mask_dir)
 
     sample = objects_dataset[0]
-    image, mask = sample
+    image, mask = sample['image'], sample['mask']
 
     plt.imshow(image)
     plt.show()
