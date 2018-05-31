@@ -14,7 +14,7 @@ import torchvision.transforms as transforms
 NUM_INPUT_CHANNELS = 3
 NUM_OUTPUT_CHANNELS = 1
 
-NUM_EPOCHS = 1
+NUM_EPOCHS = 10
 
 LEARNING_RATE = 0.01
 MOMENTUM = 0.9
