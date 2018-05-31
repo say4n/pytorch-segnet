@@ -19,10 +19,10 @@ NUM_EPOCHS = 1
 LEARNING_RATE = 0.01
 MOMENTUM = 0.9
 
-CUDA = False
+CUDA = True
 
 
-data_root = os.path.join("data", "VOCdevkit", "VOC2007")
+data_root = os.path.join(os.path.sep, "nfs4", "intern_sayan", "data", "VOCdevkit", "VOC2007")
 train_path = os.path.join(data_root,"ImageSets", "Segmentation", "train.txt")
 val_path = os.path.join(data_root, "ImageSets", "Segmentation", "val.txt")
 img_dir = os.path.join(data_root, "JPEGImages")
@@ -77,6 +77,10 @@ for epoch in range(NUM_EPOCHS):
 
         input_tensor = torch.autograd.Variable(batch['image'].view((1,3,224,224)))
         target_tensor = torch.autograd.Variable(batch['mask'].view((1,1,224,224)))
+
+        if CUDA:
+            input_tensor = input_tensor.cuda()
+            target_tensor = target_tensor.cuda()
 
         predicted_tensor, softmaxed_tensor = model(input_tensor)
 
