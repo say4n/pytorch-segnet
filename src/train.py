@@ -1,6 +1,6 @@
 """Train a SegNet model"""
 
-from model import SigNet
+from model import SegNet
 import torch
 import time
 
@@ -8,12 +8,18 @@ import time
 # Constants
 NUM_INPUT_CHANNELS = 3
 NUM_OUTPUT_CHANNELS = 3
-NUM_EPOCHS = 10
+
+NUM_EPOCHS = 1
+
 LEARNING_RATE = 0.01
 MOMENTUM = 0.9
 
+CUDA = False
 
-model = SigNet(input_channels=NUM_INPUT_CHANNELS, output_channels=NUM_OUTPUT_CHANNELS)
+if CUDA:
+    model = SegNet(input_channels=NUM_INPUT_CHANNELS, output_channels=NUM_OUTPUT_CHANNELS).cuda()
+else:
+    model = SegNet(input_channels=NUM_INPUT_CHANNELS, output_channels=NUM_OUTPUT_CHANNELS)
 
 # TODO - create dataloaders
 train_data = None
