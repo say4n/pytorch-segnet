@@ -45,7 +45,7 @@ class PascalVOCDataset(Dataset):
         raw_image = Image.open(path)
         rsz_image = raw_image.resize((224, 224))
         
-        imx_t = np.array(rsz_image)
+        imx_t = np.array(rsz_image).reshape((224, 224, 3))
 
         return imx_t
 
