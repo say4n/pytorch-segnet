@@ -100,6 +100,6 @@ for epoch in range(NUM_EPOCHS):
     is_better = loss_f < prev_loss
 
     if is_better:
-        model.save_state_dict('model_best.pth')
+        torch.save(model, "model_best.pth")
 
     print("Epoch #{}\tLoss: {:.6f}\t Time: {} s".format(epoch+1, loss_f, delta))
