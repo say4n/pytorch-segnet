@@ -26,7 +26,6 @@ GPU_ID = 0
 
 data_root = os.path.join("data", "VOCdevkit", "VOC2007")
 train_path = os.path.join(data_root,"ImageSets", "Segmentation", "train.txt")
-val_path = os.path.join(data_root, "ImageSets", "Segmentation", "val.txt")
 img_dir = os.path.join(data_root, "JPEGImages")
 mask_dir = os.path.join(data_root, "SegmentationObject")
 
@@ -42,18 +41,6 @@ train_dataloader = DataLoader(train_dataset,
                               batch_size=BATCH_SIZE,
                               shuffle=True, 
                               num_workers=4)
-
-
-val_dataset = PascalVOCDataset(list_file=val_path,
-                               img_dir=img_dir,
-                               mask_dir=mask_dir,
-                               transform=image_transform)
-
-val_data = DataLoader(val_dataset,
-                      batch_size=BATCH_SIZE,
-                      shuffle=True,
-                      num_workers=4)
-
 
 
 
