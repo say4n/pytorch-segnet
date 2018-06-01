@@ -8,6 +8,7 @@ python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevk
                 --img_dir JPEGImages \
                 --mask_dir SegmentationObject \
                 --save_dir /home/SharedData/intern_sayan/PascalVOC/
+                --checkpoint /home/SharedData/intern_sayan/PascalVOC/model_best.pth
 """
 
 from __future__ import print_function
@@ -113,6 +114,9 @@ if __name__ == "__main__":
     else:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS)
+
+    if args.checkpoint:
+        model.load_state_dict(torch.load(args.checkpoint))
 
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adadelta(model.parameters(), lr=LEARNING_RATE)
