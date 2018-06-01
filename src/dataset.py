@@ -37,7 +37,7 @@ class PascalVOCDataset(Dataset):
 
         if self.transform:
             data['image'] = self.transform(data['image_'])
-            data['mask'] = self.transform(data['mask_'])
+            data['mask'] = torch.LongTensor(data['mask_'])
 
         return data
 
