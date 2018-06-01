@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import torch
 from torch.utils.data import Dataset
 from PIL import Image
 
