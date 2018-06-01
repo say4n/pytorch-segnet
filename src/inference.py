@@ -3,7 +3,13 @@ Infer segmentation results from a trained SegNet model
 
 
 Usage:
-uint8
+python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
+                    --val_path ImageSets/Segmentation/val.txt \
+                    --img_dir JPEGImages \
+                    --mask_dir SegmentationClass \
+                    --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
+                    --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions \
+                    --gpu 1
 """
 
 from __future__ import print_function
