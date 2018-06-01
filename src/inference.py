@@ -15,6 +15,8 @@ import torchvision.transforms as transforms
 NUM_INPUT_CHANNELS = 3
 NUM_OUTPUT_CHANNELS = 1
 
+BATCH_SIZE = 16
+
 CUDA = True
 GPU_ID = 0
 
