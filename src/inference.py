@@ -11,6 +11,7 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 
 plt.switch_backend('agg')
+plt.axis('off')
 
 
 # Constants
@@ -73,16 +74,21 @@ for batch_idx, batch in enumerate(val_dataloader):
 
     for idx, predicted_mask in enumerate(predicted_tensor):
         target_mask = target_tensor[idx]
+        input_image = input_tensor[idx]
 
         fig = plt.figure()
-        
-        a = fig.add_subplot(1,2,1)
-        plt.imshow(predicted_mask.detach().cpu().numpy().reshape(224, 224))
-        a.set_title('Prediction')
 
-        a = fig.add_subplot(1,2,2)
+        a = fig.add_subplot(1,3,1)
+        plt.imshow(input_image.detach().cpu().numpy().reshape(224, 224))
+        a.set_title('Input Image')
+        
+        a = fig.add_subplot(1,3,2)
+        plt.imshow(predicted_mask.detach().cpu().numpy().reshape(224, 224))
+        a.set_title('Predicted Mask')
+
+        a = fig.add_subplot(1,3,3)
         plt.imshow(target_mask.detach().cpu().numpy().reshape(224, 224))
-        a.set_title('Ground truth')
+        a.set_title('Ground Truth')
 
         fig.savefig(os.path.join(OUTPUT_DIR, "prediction_{}_{}.png".format(batch_idx, idx)))
 
