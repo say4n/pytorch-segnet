@@ -16,12 +16,12 @@ NUM_OUTPUT_CHANNELS = 1
 
 NUM_EPOCHS = 1000
 
-LEARNING_RATE = 0.05
+LEARNING_RATE = 0.03
 MOMENTUM = 0.9
 BATCH_SIZE = 16
 
 CUDA = True
-GPU_ID = 0
+GPU_ID = 1
 
 
 data_root = os.path.join("data", "VOCdevkit", "VOC2007")
