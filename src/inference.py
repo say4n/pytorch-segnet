@@ -71,18 +71,15 @@ def validate():
             fig = plt.figure()
 
             a = fig.add_subplot(1,3,1)
-            plt.imshow(np.linalg.norm(np.transpose(input_image.detach().cpu().numpy().reshape(3, 224, 224),
-                                                   (1,2,0))))
+            plt.imshow(np.transpose(input_image.detach().cpu().numpy().reshape(3, 224, 224), (1,2,0)))
             a.set_title('Input Image')
             
             a = fig.add_subplot(1,3,2)
-            plt.imshow(np.linalg.norm(np.transpose(predicted_mask.detach().cpu().numpy().reshape(3, 224, 224),
-                                                   (1,2,0))))
+            plt.imshow(np.transpose(predicted_mask.detach().cpu().numpy().reshape(3, 224, 224), (1,2,0)))
             a.set_title('Predicted Mask')
 
             a = fig.add_subplot(1,3,3)
-            plt.imshow(np.linalg.norm(np.transpose(target_mask.detach().cpu().numpy().reshape(3, 224, 224),
-                                                   (1,2,0))))
+            plt.imshow(np.transpose(target_mask.detach().cpu().numpy().reshape(3, 224, 224), (1,2,0)))
             a.set_title('Ground Truth')
 
             fig.savefig(os.path.join(OUTPUT_DIR, "prediction_{}_{}.png".format(batch_idx, idx)))
