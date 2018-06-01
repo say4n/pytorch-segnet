@@ -82,7 +82,7 @@ def train():
 
         if is_better:
             prev_loss = loss_f
-            torch.save(model.state_dict(), "model_best.pth")
+            torch.save(model.state_dict(), os.path.join(args.save_dir, "model_best.pth"))
 
         print("Epoch #{}\tLoss: {:.8f}\t Time: {:2f}s".format(epoch+1, loss_f, delta))
 
