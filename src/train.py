@@ -45,7 +45,8 @@ parser.add_argument('--mask_dir', required=True)
 args = parser.parse_args()
 
 
-def train(train_dataloader, criterion, optimizer):
+
+def train():
     is_better = True
     prev_loss = float('inf')
 
@@ -114,4 +115,4 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adadelta(model.parameters(), lr=LEARNING_RATE)
 
     
-    train(train_dataloader=train_dataloader, criterion=criterion, optimizer=optimizer)
+    train()
