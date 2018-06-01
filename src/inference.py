@@ -122,7 +122,7 @@ if __name__ == "__main__":
 
     model.load_state_dict(torch.load(SAVED_MODEL_PATH))
 
-    criterion = torch.nn.MSELoss()
+    criterion = torch.nn.CrossEntropyLoss()
 
 
     validate()

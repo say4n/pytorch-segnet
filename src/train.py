@@ -120,7 +120,7 @@ if __name__ == "__main__":
     if args.checkpoint:
         model.load_state_dict(torch.load(args.checkpoint))
 
-    criterion = torch.nn.MSELoss()
+    criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adadelta(model.parameters(), lr=LEARNING_RATE)
 
     
