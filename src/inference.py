@@ -33,7 +33,7 @@ NUM_OUTPUT_CHANNELS = 1
 BATCH_SIZE = 8
 
 CUDA = True
-GPU_ID = 1OUTPUT_DIR = "predictions"
+GPU_ID = 1
 
 
 # Arguments
