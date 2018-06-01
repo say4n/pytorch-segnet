@@ -16,7 +16,7 @@ NUM_OUTPUT_CHANNELS = 1
 
 NUM_EPOCHS = 1000
 
-LEARNING_RATE = 0.03
+LEARNING_RATE = 0.1
 MOMENTUM = 0.9
 BATCH_SIZE = 16
 
@@ -52,7 +52,7 @@ else:
                    output_channels=NUM_OUTPUT_CHANNELS)
 
 criterion = torch.nn.MSELoss()
-optimizer = torch.optim.RMSprop(model.parameters(), lr=LEARNING_RATE)
+optimizer = torch.optim.Adadelta(model.parameters(), lr=LEARNING_RATE)
 
 
 
@@ -91,6 +91,7 @@ for epoch in range(NUM_EPOCHS):
     is_better = loss_f < prev_loss
 
     if is_better:
+        prev_loss = loss_f
         torch.save(model.state_dict(), "model_best.pth")
 
     print("Epoch #{}\tLoss: {:.8f}\t Time: {:2f}s".format(epoch+1, loss_f, delta))
