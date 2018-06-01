@@ -55,7 +55,7 @@ def validate():
 
     for batch_idx, batch in enumerate(val_dataloader):
         input_tensor = torch.autograd.Variable(batch['image'].view((-1, 3, 224, 224)))
-        target_tensor = torch.autograd.Variable(batch['mask'].view((-1, 1, 224, 224)))
+        target_tensor = torch.autograd.Variable(batch['mask'].view((-1, 3, 224, 224)))
 
         if CUDA:
             input_tensor = input_tensor.cuda(GPU_ID)
