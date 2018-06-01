@@ -6,7 +6,8 @@ Usage:
 python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
                 --train_path ImageSets/Segmentation/val.txt \
                 --img_dir JPEGImages \
-                --mask_dir SegmentationObject
+                --mask_dir SegmentationObject \
+                --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth
 """
 
 from __future__ import print_function
@@ -33,7 +34,6 @@ BATCH_SIZE = 8
 CUDA = True
 GPU_ID = 1
 
-SAVED_MODEL_PATH = "model_best.pth"
 OUTPUT_DIR = "predictions"
 
 
@@ -44,6 +44,7 @@ parser.add_argument('--data_root', required=True)
 parser.add_argument('--val_path', required=True)
 parser.add_argument('--img_dir', required=True)
 parser.add_argument('--mask_dir', required=True)
+parser.add_argument('--model_path', required=True)
 
 args = parser.parse_args()
 
@@ -87,10 +88,12 @@ def validate():
 
 
 if __name__ == "__main__":
-    data_root = os.path.join("data", "VOCdevkit", "VOC2007")
-    val_path = os.path.join(data_root, "ImageSets", "Segmentation", "val.txt")
-    img_dir = os.path.join(data_root, "JPEGImages")
-    mask_dir = os.path.join(data_root, "SegmentationObject")
+    data_root = args.data_root
+    val_path = os.path.join(data_root, args.val_path)
+    img_dir = os.path.join(data_root, args.img_dir)
+    mask_dir = os.path.join(data_root, args.mask_dir)
+
+    SAVED_MODEL_PATH = args.model_path
 
     image_transform = transforms.ToTensor()
 
