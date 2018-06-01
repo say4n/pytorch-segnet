@@ -4,7 +4,7 @@ Infer segmentation results from a trained SegNet model
 
 Usage:
 python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
-                --train_path ImageSets/Segmentation/val.txt \
+                --val_path ImageSets/Segmentation/val.txt \
                 --img_dir JPEGImages \
                 --mask_dir SegmentationObject \
                 --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
@@ -44,6 +44,7 @@ parser.add_argument('--val_path', required=True)
 parser.add_argument('--img_dir', required=True)
 parser.add_argument('--mask_dir', required=True)
 parser.add_argument('--model_path', required=True)
+parser.add_argument('--output_dir', required=True)
 
 args = parser.parse_args()
 
