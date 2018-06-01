@@ -7,7 +7,7 @@ python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevk
                 --train_path ImageSets/Segmentation/train.txt \
                 --img_dir JPEGImages \
                 --mask_dir SegmentationObject \
-                --save_dir /home/SharedData/intern_sayan/PascalVOC/
+                --save_dir /home/SharedData/intern_sayan/PascalVOC/ \
                 --checkpoint /home/SharedData/intern_sayan/PascalVOC/model_best.pth
 """
 
