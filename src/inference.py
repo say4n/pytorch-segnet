@@ -8,7 +8,7 @@ python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOC
                 --img_dir JPEGImages \
                 --mask_dir SegmentationObject \
                 --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
-                --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions
+                --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions \
                 --gpu 1
 """
 

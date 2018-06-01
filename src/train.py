@@ -8,7 +8,7 @@ python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevk
                 --img_dir JPEGImages \
                 --mask_dir SegmentationObject \
                 --save_dir /home/SharedData/intern_sayan/PascalVOC/ \
-                --checkpoint /home/SharedData/intern_sayan/PascalVOC/model_best.pth
+                --checkpoint /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
                 --gpu 1
 """
 
