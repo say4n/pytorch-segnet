@@ -52,9 +52,7 @@ else:
                    output_channels=NUM_OUTPUT_CHANNELS)
 
 criterion = torch.nn.MSELoss()
-optimizer = torch.optim.SGD(model.parameters(),
-                            lr=LEARNING_RATE, 
-                            momentum=MOMENTUM)
+optimizer = torch.optim.RMSprop(model.parameters(), lr=LEARNING_RATE)
 
 
 
