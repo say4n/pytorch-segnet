@@ -43,6 +43,7 @@ parser.add_argument('--train_path', required=True)
 parser.add_argument('--img_dir', required=True)
 parser.add_argument('--mask_dir', required=True)
 parser.add_argument('--save_dir', required=True)
+parser.add_argument('--checkpoint')
 
 args = parser.parse_args()
 
