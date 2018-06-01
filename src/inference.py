@@ -3,13 +3,7 @@ Infer segmentation results from a trained SegNet model
 
 
 Usage:
-python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
-                    --val_path ImageSets/Segmentation/val.txt \
-                    --img_dir JPEGImages \
-                    --mask_dir SegmentationClass \
-                    --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
-                    --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions \
-                    --gpu 1
+uint8
 """
 
 from __future__ import print_function
@@ -72,17 +66,17 @@ def validate():
 
             a = fig.add_subplot(1,3,1)
             input_imx = input_image.detach().cpu().numpy().reshape(3, 224, 224)
-            plt.imshow(np.asarray(np.transpose(input_imx, (1,2,0)), dtype=np.short))
+            plt.imshow(np.asarray(np.transpose(input_imx, (1,2,0)), dtype=np.uint8))
             a.set_title('Input Image')
             
             a = fig.add_subplot(1,3,2)
             predicted_mx = predicted_mask.detach().cpu().numpy().reshape(3, 224, 224)
-            plt.imshow(np.asarray(np.transpose(predicted_mx, (1,2,0)), dtype=np.short))
+            plt.imshow(np.asarray(np.transpose(predicted_mx, (1,2,0)), dtype=np.uint8))
             a.set_title('Predicted Mask')
 
             a = fig.add_subplot(1,3,3)
             target_mx = target_mask.detach().cpu().numpy().reshape(3, 224, 224)
-            plt.imshow(np.asarray(np.transpose(target_mx, (1,2,0)), dtype=np.short))
+            plt.imshow(np.asarray(np.transpose(target_mx, (1,2,0)), dtype=np.uint8))
             a.set_title('Ground Truth')
 
             fig.savefig(os.path.join(OUTPUT_DIR, "prediction_{}_{}.png".format(batch_idx, idx)))
