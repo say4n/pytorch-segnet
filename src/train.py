@@ -113,14 +113,17 @@ if __name__ == "__main__":
     if CUDA:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS).cuda(GPU_ID)
+        criterion = torch.nn.CrossEntropyLoss().cuda()
     else:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS)
+        criterion = torch.nn.CrossEntropyLoss()
 
+    
     if args.checkpoint:
         model.load_state_dict(torch.load(args.checkpoint))
 
-    criterion = torch.nn.CrossEntropyLoss()
+    
     optimizer = torch.optim.Adadelta(model.parameters(), lr=LEARNING_RATE)
 
     
