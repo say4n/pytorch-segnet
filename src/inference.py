@@ -79,7 +79,7 @@ for batch_idx, batch in enumerate(val_dataloader):
         fig = plt.figure()
 
         a = fig.add_subplot(1,3,1)
-        plt.imshow(input_image.detach().cpu().numpy().reshape(3, 224, 224))
+        plt.imshow(np.transpose(input_image.detach().cpu().numpy().reshape(3, 224, 224), (1,2,0)))
         a.set_title('Input Image')
         
         a = fig.add_subplot(1,3,2)
