@@ -52,7 +52,7 @@ class PascalVOCDataset(Dataset):
 
     def load_mask(self, path=None):
         raw_image = Image.open(path)
-        rgb_image = raw_img.convert('RGB')
+        rgb_image = raw_image.convert('RGB')
         rsz_image = rgb_image.resize((224, 224))
 
         imx_t = np.array(rsz_image).reshape((224, 224, 3))
