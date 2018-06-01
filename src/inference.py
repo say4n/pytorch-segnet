@@ -9,6 +9,7 @@ python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOC
                 --mask_dir SegmentationObject \
                 --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
                 --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions
+                --gpu 1
 """
 
 from __future__ import print_function
@@ -32,9 +33,6 @@ NUM_OUTPUT_CHANNELS = 1
 
 BATCH_SIZE = 8
 
-CUDA = True
-GPU_ID = 1
-
 
 # Arguments
 parser = argparse.ArgumentParser(description='Validate a SegNet model')
@@ -45,6 +43,8 @@ parser.add_argument('--img_dir', required=True)
 parser.add_argument('--mask_dir', required=True)
 parser.add_argument('--model_path', required=True)
 parser.add_argument('--output_dir', required=True)
+parser.add_argument('--gpu')
+
 
 args = parser.parse_args()
 
@@ -95,6 +95,9 @@ if __name__ == "__main__":
 
     SAVED_MODEL_PATH = args.model_path
     OUTPUT_DIR = args.output_dir
+
+    CUDA = args.gpu is not None
+    GPU_ID = arg.gpu
 
     image_transform = transforms.ToTensor()
 

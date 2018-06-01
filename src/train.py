@@ -9,6 +9,7 @@ python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevk
                 --mask_dir SegmentationObject \
                 --save_dir /home/SharedData/intern_sayan/PascalVOC/ \
                 --checkpoint /home/SharedData/intern_sayan/PascalVOC/model_best.pth
+                --gpu 1
 """
 
 from __future__ import print_function
@@ -32,9 +33,6 @@ LEARNING_RATE = 1
 MOMENTUM = 0.9
 BATCH_SIZE = 16
 
-CUDA = True
-GPU_ID = 1
-
 
 # Arguments
 parser = argparse.ArgumentParser(description='Train a SegNet model')
@@ -45,6 +43,7 @@ parser.add_argument('--img_dir', required=True)
 parser.add_argument('--mask_dir', required=True)
 parser.add_argument('--save_dir', required=True)
 parser.add_argument('--checkpoint')
+parser.add_argument('--gpu')
 
 args = parser.parse_args()
 
@@ -94,6 +93,9 @@ if __name__ == "__main__":
     train_path = os.path.join(data_root, args.train_path)
     img_dir = os.path.join(data_root, args.img_dir)
     mask_dir = os.path.join(data_root, args.mask_dir)
+
+    CUDA = args.gpu is not None
+    GPU_ID = arg.gpu
 
     image_transform = transforms.ToTensor()
 
