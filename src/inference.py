@@ -17,10 +17,10 @@ plt.switch_backend('agg')
 NUM_INPUT_CHANNELS = 3
 NUM_OUTPUT_CHANNELS = 1
 
-BATCH_SIZE = 16
+BATCH_SIZE = 8
 
 CUDA = True
-GPU_ID = 0
+GPU_ID = 1
 
 SAVED_MODEL_PATH = "model_best.pth"
 OUTPUT_DIR = "predictions"
@@ -85,6 +85,9 @@ for batch_idx, batch in enumerate(val_dataloader):
         a.set_title('Ground truth')
 
         fig.savefig(os.path.join(OUTPUT_DIR, "prediction_{}_{}.png".format(batch_idx, idx)))
+
+        plt.close(fig)
+
 
 
 
