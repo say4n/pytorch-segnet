@@ -43,7 +43,7 @@ parser.add_argument('--img_dir', required=True)
 parser.add_argument('--mask_dir', required=True)
 parser.add_argument('--model_path', required=True)
 parser.add_argument('--output_dir', required=True)
-parser.add_argument('--gpu')
+parser.add_argument('--gpu', type=int)
 
 
 args = parser.parse_args()

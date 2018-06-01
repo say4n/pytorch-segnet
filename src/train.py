@@ -43,7 +43,7 @@ parser.add_argument('--img_dir', required=True)
 parser.add_argument('--mask_dir', required=True)
 parser.add_argument('--save_dir', required=True)
 parser.add_argument('--checkpoint')
-parser.add_argument('--gpu')
+parser.add_argument('--gpu', type=int)
 
 args = parser.parse_args()
 
