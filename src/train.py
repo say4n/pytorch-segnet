@@ -6,7 +6,7 @@ Usage:
 python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
                 --train_path ImageSets/Segmentation/train.txt \
                 --img_dir JPEGImages \
-                --mask_dir SegmentationObject \
+                --mask_dir SegmentationObject
 """
 
 from __future__ import print_function
@@ -37,14 +37,10 @@ GPU_ID = 1
 # Arguments
 parser = argparse.ArgumentParser(description='Train a SegNet model')
 
-parser.add_argument('--data_root',
-                    default=os.path.join("data", "VOCdevkit", "VOC2007"))
-parser.add_argument('--train_path',
-                    default=os.path.join("data", "VOCdevkit", "VOC2007", "ImageSets", "Segmentation", "train.txt"))
-parser.add_argument('--img_dir',
-                    default=os.path.join("data", "VOCdevkit", "VOC2007", "JPEGImages"))
-parser.add_argument('--mask_dir',
-                    default=os.path.join("data", "VOCdevkit", "VOC2007", "SegmentationObject"))
+parser.add_argument('--data_root', required=True)
+parser.add_argument('--train_path', required=True)
+parser.add_argument('--img_dir', required=True)
+parser.add_argument('--mask_dir', required=True)
 
 args = parser.parse_args()
 
