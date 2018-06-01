@@ -10,6 +10,8 @@ import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 
+plt.switch_backend('agg')
+
 
 # Constants
 NUM_INPUT_CHANNELS = 3
@@ -75,11 +77,11 @@ for batch_idx, batch in enumerate(val_dataloader):
         fig = plt.figure()
         
         a = fig.add_subplot(1,2,1)
-        plt.imshow(predicted_mask)
+        plt.imshow(predicted_mask.detach().cpu().numpy().reshape(224, 224))
         a.set_title('Prediction')
 
         a = fig.add_subplot(1,2,2)
-        plt.imshow(target_mask)
+        plt.imshow(target_mask.detach().cpu().numpy().reshape(224, 224))
         a.set_title('Ground truth')
 
         fig.savefig(os.path.join(OUTPUT_DIR, "prediction_{}_{}.png".format(batch_idx, idx)))
