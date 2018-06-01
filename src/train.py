@@ -25,7 +25,7 @@ import torchvision.transforms as transforms
 
 # Constants
 NUM_INPUT_CHANNELS = 3
-NUM_OUTPUT_CHANNELS = 1
+NUM_OUTPUT_CHANNELS = 3
 
 NUM_EPOCHS = 1000
 

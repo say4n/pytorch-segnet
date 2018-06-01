@@ -29,7 +29,7 @@ plt.axis('off')
 
 # Constants
 NUM_INPUT_CHANNELS = 3
-NUM_OUTPUT_CHANNELS = 1
+NUM_OUTPUT_CHANNELS = 3
 
 BATCH_SIZE = 8
 
