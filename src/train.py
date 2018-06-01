@@ -95,7 +95,7 @@ if __name__ == "__main__":
     mask_dir = os.path.join(data_root, args.mask_dir)
 
     CUDA = args.gpu is not None
-    GPU_ID = arg.gpu
+    GPU_ID = args.gpu
 
     image_transform = transforms.ToTensor()
 

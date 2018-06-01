@@ -97,7 +97,7 @@ if __name__ == "__main__":
     OUTPUT_DIR = args.output_dir
 
     CUDA = args.gpu is not None
-    GPU_ID = arg.gpu
+    GPU_ID = args.gpu
 
     image_transform = transforms.ToTensor()
 
