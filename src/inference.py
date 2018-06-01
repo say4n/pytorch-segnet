@@ -71,17 +71,17 @@ def validate():
             fig = plt.figure()
 
             a = fig.add_subplot(1,3,1)
-            input_imx = input_image.detach().cpu().numpy().reshape(3, 224, 224)
+            input_imx = input_image.detach().cpu().numpy().reshape(3, 224, 224)/255.0
             plt.imshow(np.transpose(input_imx, (1,2,0)))
             a.set_title('Input Image')
             
             a = fig.add_subplot(1,3,2)
-            predicted_mx = predicted_mask.detach().cpu().numpy().reshape(3, 224, 224)
+            predicted_mx = predicted_mask.detach().cpu().numpy().reshape(3, 224, 224)/255.0
             plt.imshow(np.transpose(predicted_mx, (1,2,0)))
             a.set_title('Predicted Mask')
 
             a = fig.add_subplot(1,3,3)
-            target_mx = target_mask.detach().cpu().numpy().reshape(3, 224, 224)
+            target_mx = target_mask.detach().cpu().numpy().reshape(3, 224, 224)/255.0
             plt.imshow(np.transpose(target_mx, (1,2,0)))
             a.set_title('Ground Truth')
 
