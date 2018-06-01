@@ -14,7 +14,7 @@ python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevk
 
 from __future__ import print_function
 import argparse
-from dataset import PascalVOCDataset
+from dataset import PascalVOCDataset, NUM_CLASSES
 from model import SegNet
 import os
 import time
@@ -25,11 +25,11 @@ import torchvision.transforms as transforms
 
 # Constants
 NUM_INPUT_CHANNELS = 3
-NUM_OUTPUT_CHANNELS = 3
+NUM_OUTPUT_CHANNELS = NUM_CLASSES
 
-NUM_EPOCHS = 5000
+NUM_EPOCHS = 6000
 
-LEARNING_RATE = 0.3
+LEARNING_RATE = 0.1
 MOMENTUM = 0.9
 BATCH_SIZE = 16
 
@@ -60,8 +60,8 @@ def train():
         t_start = time.time()
         
         for batch in train_dataloader:
-            input_tensor = torch.autograd.Variable(batch['image'].view((-1, 3, 224, 224)))
-            target_tensor = torch.autograd.Variable(batch['mask'].view((-1, 3, 224, 224)))
+            input_tensor = torch.autograd.Variable(batch['image'])
+            target_tensor = torch.autograd.Variable(batch['mask'])
 
             if CUDA:
                 input_tensor = input_tensor.cuda(GPU_ID)
@@ -124,7 +124,9 @@ if __name__ == "__main__":
         model.load_state_dict(torch.load(args.checkpoint))
 
     
-    optimizer = torch.optim.Adadelta(model.parameters(), lr=LEARNING_RATE)
+    optimizer = torch.optim.Adadelta(model.parameters(),
+                                     lr=LEARNING_RATE,
+                                     momentum=MOMENTUM)
 
     
     train()

@@ -8,6 +8,17 @@ from torch.utils.data import Dataset
 from PIL import Image
 
 
+VOC_CLASSES = ('background',  # always index 0
+               'aeroplane', 'bicycle', 'bird', 'boat',
+               'bottle', 'bus', 'car', 'cat', 'chair',
+               'cow', 'diningtable', 'dog', 'horse',
+               'motorbike', 'person', 'pottedplant',
+               'sheep', 'sofa', 'train', 'tvmonitor')
+
+NUM_CLASSES = len(VOC_CLASSES)
+
+
+
 class PascalVOCDataset(Dataset):
     """Pascal VOC 2007 Dataset"""
     def __init__(self, list_file, img_dir, mask_dir, transform=None):
@@ -44,18 +55,17 @@ class PascalVOCDataset(Dataset):
 
     def load_image(self, path=None):
         raw_image = Image.open(path)
-        rsz_image = raw_image.resize((224, 224))
-        
-        imx_t = np.array(rsz_image).reshape((224, 224, 3))
+        imx_t = np.array(raw_image)
 
         return imx_t
 
     def load_mask(self, path=None):
         raw_image = Image.open(path)
-        rgb_image = raw_image.convert('RGB')
-        rsz_image = rgb_image.resize((224, 224))
+        imx_t = np.array(raw_image)
 
-        imx_t = np.array(rsz_image).reshape((224, 224, 3))
+        dim = (*imx_t.shape, 1)
+        imx_t = imx_t.reshape(dim)
+        imx_t = np.array(imx_t == np.arange(NUM_CLASSES), dtype=np.float32)
 
         return imx_t
 
