@@ -4,12 +4,12 @@ Infer segmentation results from a trained SegNet model
 
 Usage:
 python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
-                --val_path ImageSets/Segmentation/val.txt \
-                --img_dir JPEGImages \
-                --mask_dir SegmentationObject \
-                --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
-                --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions \
-                --gpu 1
+                    --val_path ImageSets/Segmentation/val.txt \
+                    --img_dir JPEGImages \
+                    --mask_dir SegmentationClass \
+                    --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
+                    --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions \
+                    --gpu 1
 """
 
 from __future__ import print_function
@@ -116,11 +116,11 @@ if __name__ == "__main__":
     if CUDA:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS).cuda(GPU_ID)
-        criterion = torch.nn.CrossEntropyLoss().cuda()
+        criterion = torch.nn.MSELoss().cuda()
     else:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS)
-        criterion = torch.nn.CrossEntropyLoss()
+        criterion = torch.nn.MSELoss()
 
     
     model.load_state_dict(torch.load(SAVED_MODEL_PATH))

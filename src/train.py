@@ -6,7 +6,7 @@ Usage:
 python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
                 --train_path ImageSets/Segmentation/train.txt \
                 --img_dir JPEGImages \
-                --mask_dir SegmentationObject \
+                --mask_dir SegmentationClass \
                 --save_dir /home/SharedData/intern_sayan/PascalVOC/ \
                 --checkpoint /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
                 --gpu 1
@@ -113,11 +113,11 @@ if __name__ == "__main__":
     if CUDA:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS).cuda(GPU_ID)
-        criterion = torch.nn.CrossEntropyLoss().cuda()
+        criterion = torch.nn.MSELoss().cuda()
     else:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS)
-        criterion = torch.nn.CrossEntropyLoss()
+        criterion = torch.nn.MSELoss()
 
     
     if args.checkpoint:
