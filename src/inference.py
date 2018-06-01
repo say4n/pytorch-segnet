@@ -3,11 +3,12 @@ Infer segmentation results from a trained SegNet model
 
 
 Usage:
-python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
+python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
                 --train_path ImageSets/Segmentation/val.txt \
                 --img_dir JPEGImages \
                 --mask_dir SegmentationObject \
                 --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth
+                --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions
 """
 
 from __future__ import print_function
@@ -32,9 +33,7 @@ NUM_OUTPUT_CHANNELS = 1
 BATCH_SIZE = 8
 
 CUDA = True
-GPU_ID = 1
-
-OUTPUT_DIR = "predictions"
+GPU_ID = 1OUTPUT_DIR = "predictions"
 
 
 # Arguments
@@ -94,6 +93,7 @@ if __name__ == "__main__":
     mask_dir = os.path.join(data_root, args.mask_dir)
 
     SAVED_MODEL_PATH = args.model_path
+    OUTPUT_DIR = args.output_dir
 
     image_transform = transforms.ToTensor()
 
