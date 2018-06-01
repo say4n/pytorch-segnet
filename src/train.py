@@ -6,7 +6,8 @@ Usage:
 python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
                 --train_path ImageSets/Segmentation/train.txt \
                 --img_dir JPEGImages \
-                --mask_dir SegmentationObject
+                --mask_dir SegmentationObject \
+                --save_dir /home/SharedData/intern_sayan/PascalVOC/
 """
 
 from __future__ import print_function
@@ -41,6 +42,7 @@ parser.add_argument('--data_root', required=True)
 parser.add_argument('--train_path', required=True)
 parser.add_argument('--img_dir', required=True)
 parser.add_argument('--mask_dir', required=True)
+parser.add_argument('--save_dir', required=True)
 
 args = parser.parse_args()
 
