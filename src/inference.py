@@ -1,6 +1,7 @@
 """Infer segmentation results from a trained SegNet model"""
 
 from __future__ import print_function
+from dataset import PascalVOCDataset
 import matplotlib.pyplot as plt
 from model import SegNet
 import numpy as np
