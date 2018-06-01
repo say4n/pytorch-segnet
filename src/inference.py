@@ -7,7 +7,7 @@ python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOC
                 --train_path ImageSets/Segmentation/val.txt \
                 --img_dir JPEGImages \
                 --mask_dir SegmentationObject \
-                --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth
+                --model_path /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
                 --output_dir /home/SharedData/intern_sayan/PascalVOC/predictions
 """
 
