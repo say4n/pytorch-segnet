@@ -65,8 +65,6 @@ class PascalVOCDataset(Dataset):
         raw_image = raw_image.crop((0,0,224,224))
         imx_t = np.array(raw_image)
 
-        imx_t = np.transpose(imx_t, (2,0,1))
-
         return imx_t
 
 
