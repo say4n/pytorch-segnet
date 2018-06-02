@@ -69,7 +69,7 @@ def train():
 
             predicted_tensor, softmaxed_tensor = model(input_tensor)
 
-            print(softmaxed_tensor.size(), target_tensor.size())
+            print(torch.max(torch.max(target_tensor)))
 
             loss = criterion(softmaxed_tensor, target_tensor)
 
