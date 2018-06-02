@@ -69,8 +69,6 @@ def train():
 
             predicted_tensor, softmaxed_tensor = model(input_tensor)
 
-            print(torch.max(torch.max(target_tensor)))
-
             loss = criterion(softmaxed_tensor, target_tensor)
 
             optimizer.zero_grad()
