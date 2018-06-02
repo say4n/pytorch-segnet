@@ -69,7 +69,7 @@ def train():
 
             predicted_tensor, softmaxed_tensor = model(input_tensor)
 
-            loss = criterion(predicted_tensor, target_tensor)
+            loss = criterion(softmaxed_tensor, target_tensor)
 
             optimizer.zero_grad()
             loss.backward()
