@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 from model import SegNet
 import numpy as np
 import os
+from PIL import Image
 import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
@@ -78,11 +79,13 @@ def validate():
             a = fig.add_subplot(1,3,2)
             predicted_mx = predicted_mask.detach().cpu().numpy().reshape(NUM_CLASSES, 224, 224)
             predicted_mx = predicted_mx.argmax(axis=0)
+            predicted_mx = np.array(Image.fromarray(predicted_mx).convert("RGB"))
             plt.imshow(np.abs(np.transpose(predicted_mx, (1,2,0))))
             a.set_title('Predicted Mask')
 
             a = fig.add_subplot(1,3,3)
             target_mx = target_mask.detach().cpu().numpy().reshape(1, 224, 224)
+            target_mx = np.array(Image.fromarray(target_mx).convert("RGB"))
             plt.imshow(np.abs(np.transpose(target_mx, (1,2,0))))
             a.set_title('Ground Truth')
 
