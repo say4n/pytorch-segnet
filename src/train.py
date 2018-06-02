@@ -76,7 +76,7 @@ def train():
             optimizer.step()
 
             loss_f += loss.float()
-            prediction_f = predicted_tensor.float()
+            prediction_f = softmaxed_tensor.float()
             
         delta = time.time() - t_start
         is_better = loss_f < prev_loss
