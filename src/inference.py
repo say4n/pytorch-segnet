@@ -14,7 +14,7 @@ python inference.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOC
 
 from __future__ import print_function
 import argparse
-from dataset import PascalVOCDataset
+from dataset import PascalVOCDataset, NUM_CLASSES
 import matplotlib.pyplot as plt
 from model import SegNet
 import numpy as np
@@ -54,8 +54,8 @@ def validate():
     model.eval()
 
     for batch_idx, batch in enumerate(val_dataloader):
-        input_tensor = torch.autograd.Variable(batch['image'].view((-1, 3, 224, 224)))
-        target_tensor = torch.autograd.Variable(batch['mask'].view((-1, 3, 224, 224)))
+        input_tensor = torch.autograd.Variable(batch['image'])
+        target_tensor = torch.autograd.Variable(batch['mask'])
 
         if CUDA:
             input_tensor = input_tensor.cuda(GPU_ID)
@@ -64,7 +64,7 @@ def validate():
         predicted_tensor, softmaxed_tensor = model(input_tensor)
         loss = criterion(predicted_tensor, target_tensor)
 
-        for idx, predicted_mask in enumerate(predicted_tensor):
+        for idx, predicted_mask in enumerate(softmaxed_tensor):
             target_mask = target_tensor[idx]
             input_image = input_tensor[idx]
 
@@ -76,12 +76,13 @@ def validate():
             a.set_title('Input Image')
             
             a = fig.add_subplot(1,3,2)
-            predicted_mx = predicted_mask.detach().cpu().numpy().reshape(3, 224, 224)
+            predicted_mx = predicted_mask.detach().cpu().numpy().reshape(NUM_CLASSES, 224, 224)
+            predicted_mx = predicted_mx.argmax(axis=0)
             plt.imshow(np.abs(np.transpose(predicted_mx, (1,2,0))))
             a.set_title('Predicted Mask')
 
             a = fig.add_subplot(1,3,3)
-            target_mx = target_mask.detach().cpu().numpy().reshape(3, 224, 224)
+            target_mx = target_mask.detach().cpu().numpy().reshape(1, 224, 224)
             plt.imshow(np.abs(np.transpose(target_mx, (1,2,0))))
             a.set_title('Ground Truth')
 
@@ -111,19 +112,19 @@ if __name__ == "__main__":
                                    transform=image_transform)
 
     val_dataloader = DataLoader(val_dataset,
-                          batch_size=BATCH_SIZE,
-                          shuffle=True,
-                          num_workers=4)
+                                batch_size=BATCH_SIZE,
+                                shuffle=True,
+                                num_workers=4)
 
 
     if CUDA:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS).cuda(GPU_ID)
-        criterion = torch.nn.MSELoss().cuda()
+        criterion = torch.nn.CrossEntropyLoss().cuda()
     else:
         model = SegNet(input_channels=NUM_INPUT_CHANNELS,
                        output_channels=NUM_OUTPUT_CHANNELS)
-        criterion = torch.nn.MSELoss()
+        criterion = torch.nn.CrossEntropyLoss()
 
     
     model.load_state_dict(torch.load(SAVED_MODEL_PATH))
