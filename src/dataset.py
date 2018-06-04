@@ -70,7 +70,7 @@ class PascalVOCDataset(Dataset):
         imx_t[imx_t==255] = 0
 
         c_prob = list(map(lambda item:item[1]/imx_t.size,
-                          Counter(imx_t.reshape(-1, 224*224).tolist()).items()))
+                          Counter(imx_t.reshape(-1, 224*224).tolist()[0]).items()))
 
         return imx_t, c_prob
 
