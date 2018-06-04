@@ -55,14 +55,14 @@ class PascalVOCDataset(Dataset):
 
     def load_image(self, path=None):
         raw_image = Image.open(path)
-        raw_image = raw_image.crop((0,0,224,224))
+        raw_image = raw_image.resize((224, 224))
         imx_t = np.array(raw_image)
 
         return imx_t
 
     def load_mask(self, path=None):
         raw_image = Image.open(path)
-        raw_image = raw_image.crop((0,0,224,224))
+        raw_image = raw_image.resize((224, 224))
         imx_t = np.array(raw_image)
         # remove border
         imx_t[imx_t==255] = 0
