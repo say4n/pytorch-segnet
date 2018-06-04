@@ -6,6 +6,7 @@ from __future__ import print_function
 from collections import OrderedDict
 import torch
 import torch.nn as nn
+import torchvision.models as models
 import pprint
 
 F = nn.functional
@@ -38,6 +39,8 @@ class SegNet(nn.Module):
         self.output_channels = output_channels
 
         self.num_channels = input_channels
+
+        self.vgg16_weights = models.vgg16(pretrained=True).state_dict()
 
 
         # Encoder layers
@@ -133,6 +136,8 @@ class SegNet(nn.Module):
                                                           padding=1),
                                                 nn.BatchNorm2d(512)
                                                 ])
+
+        self.init_vgg_weigts()
 
         # Decoder layers
 
@@ -309,3 +314,45 @@ class SegNet(nn.Module):
 
         
         return x_00d, x_softmax
+
+
+    def init_vgg_weigts(self):
+        self.encoder_conv_00.state_dict()['0.weight'] = self.vgg16_weights['features.0.weight']
+        self.encoder_conv_00.state_dict()['0.bias'] = self.vgg16_weights['features.0.bias']
+
+        self.encoder_conv_01.state_dict()['0.weight'] = self.vgg16_weights['features.2.weight']
+        self.encoder_conv_01.state_dict()['0.bias'] = self.vgg16_weights['features.2.bias']
+
+        self.encoder_conv_10.state_dict()['0.weight'] = self.vgg16_weights['features.5.weight']
+        self.encoder_conv_10.state_dict()['0.bias'] = self.vgg16_weights['features.5.bias']
+
+        self.encoder_conv_11.state_dict()['0.weight'] = self.vgg16_weights['features.7.weight']
+        self.encoder_conv_11.state_dict()['0.bias'] = self.vgg16_weights['features.7.bias']
+
+        self.encoder_conv_20.state_dict()['0.weight'] = self.vgg16_weights['features.10.weight']
+        self.encoder_conv_20.state_dict()['0.bias'] = self.vgg16_weights['features.10.bias']
+
+        self.encoder_conv_21.state_dict()['0.weight'] = self.vgg16_weights['features.12.weight']
+        self.encoder_conv_21.state_dict()['0.bias'] = self.vgg16_weights['features.12.bias']
+
+        self.encoder_conv_22.state_dict()['0.weight'] = self.vgg16_weights['features.14.weight']
+        self.encoder_conv_22.state_dict()['0.bias'] = self.vgg16_weights['features.14.bias']
+
+        self.encoder_conv_30.state_dict()['0.weight'] = self.vgg16_weights['features.17.weight']
+        self.encoder_conv_30.state_dict()['0.bias'] = self.vgg16_weights['features.17.bias']
+
+        self.encoder_conv_31.state_dict()['0.weight'] = self.vgg16_weights['features.19.weight']
+        self.encoder_conv_31.state_dict()['0.bias'] = self.vgg16_weights['features.19.bias']
+
+        self.encoder_conv_32.state_dict()['0.weight'] = self.vgg16_weights['features.21.weight']
+        self.encoder_conv_32.state_dict()['0.bias'] = self.vgg16_weights['features.21.bias']
+
+        self.encoder_conv_40.state_dict()['0.weight'] = self.vgg16_weights['features.21.weight']
+        self.encoder_conv_40.state_dict()['0.bias'] = self.vgg16_weights['features.21.bias']
+
+        self.encoder_conv_41.state_dict()['0.weight'] = self.vgg16_weights['features.24.weight']
+        self.encoder_conv_41.state_dict()['0.bias'] = self.vgg16_weights['features.24.bias']
+
+        self.encoder_conv_42.state_dict()['0.weight'] = self.vgg16_weights['features.26.weight']
+        self.encoder_conv_42.state_dict()['0.bias'] = self.vgg16_weights['features.26.bias']
+
