@@ -44,14 +44,13 @@ class PascalVOCDataset(Dataset):
         gt_mask, class_probab = self.load_mask(path=mask_path)
 
         data = {
-                    'image_': image,
-                    'mask_' : gt_mask,
-                    'c_prob': class_probab
+                    'image': image,
+                    'mask' : torch.LongTensor(gt_mask),
+                    'c_prob': torch.Tensor(class_probab)
                     }
 
         if self.transform:
-            data['image'] = self.transform(data['image_'])
-            data['mask'] = torch.LongTensor(data['mask_'])
+            data['image'] = self.transform(data['image'])
 
         return data
 
