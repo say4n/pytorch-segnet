@@ -78,12 +78,12 @@ def validate():
             
             a = fig.add_subplot(1,3,2)
             predicted_mx = predicted_mask.detach().cpu().numpy().reshape(NUM_CLASSES, 224, 224)
-            predicted_mx = predicted_mx.argmax(axis=0)
+            predicted_mx = np.reshape(predicted_mx.argmax(axis=0))
             plt.imshow(predicted_mx)
             a.set_title('Predicted Mask')
 
             a = fig.add_subplot(1,3,3)
-            target_mx = target_mask.detach().cpu().numpy().reshape(1, 224, 224)
+            target_mx = target_mask.detach().cpu().numpy()
             plt.imshow(target_mx)
             a.set_title('Ground Truth')
 
