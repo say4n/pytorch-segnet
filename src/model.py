@@ -40,7 +40,7 @@ class SegNet(nn.Module):
 
         self.num_channels = input_channels
 
-        self.vgg16_weights = models.vgg16(pretrained=True).state_dict()
+        self.vgg16 = models.vgg16(pretrained=True)
 
 
         # Encoder layers
@@ -317,42 +317,42 @@ class SegNet(nn.Module):
 
 
     def init_vgg_weigts(self):
-        self.encoder_conv_00.state_dict()['0.weight'] = self.vgg16_weights['features.0.weight']
-        self.encoder_conv_00.state_dict()['0.bias'] = self.vgg16_weights['features.0.bias']
+        self.encoder_conv_00[0].weight.data = self.vgg16.features[0].weight.data
+        self.encoder_conv_00[0].bias.data = self.vgg16.features[0].bias.data
 
-        self.encoder_conv_01.state_dict()['0.weight'] = self.vgg16_weights['features.2.weight']
-        self.encoder_conv_01.state_dict()['0.bias'] = self.vgg16_weights['features.2.bias']
+        self.encoder_conv_01[0].weight.data = self.vgg16.features[2].weight.data
+        self.encoder_conv_01[0].bias.data = self.vgg16.features[2].bias.data
 
-        self.encoder_conv_10.state_dict()['0.weight'] = self.vgg16_weights['features.5.weight']
-        self.encoder_conv_10.state_dict()['0.bias'] = self.vgg16_weights['features.5.bias']
+        self.encoder_conv_10[0].weight.data = self.vgg16.features[5].weight.data
+        self.encoder_conv_10[0].bias.data = self.vgg16.features[5].bias.data
 
-        self.encoder_conv_11.state_dict()['0.weight'] = self.vgg16_weights['features.7.weight']
-        self.encoder_conv_11.state_dict()['0.bias'] = self.vgg16_weights['features.7.bias']
+        self.encoder_conv_11[0].weight.data = self.vgg16.features[7].weight.data
+        self.encoder_conv_11[0].bias.data = self.vgg16.features[7].bias.data
 
-        self.encoder_conv_20.state_dict()['0.weight'] = self.vgg16_weights['features.10.weight']
-        self.encoder_conv_20.state_dict()['0.bias'] = self.vgg16_weights['features.10.bias']
+        self.encoder_conv_20[0].weight.data = self.vgg16.features[10].weight.data
+        self.encoder_conv_20[0].bias.data = self.vgg16.features[10].bias.data
 
-        self.encoder_conv_21.state_dict()['0.weight'] = self.vgg16_weights['features.12.weight']
-        self.encoder_conv_21.state_dict()['0.bias'] = self.vgg16_weights['features.12.bias']
+        self.encoder_conv_21[0].weight.data = self.vgg16.features[12].weight.data
+        self.encoder_conv_21[0].bias.data = self.vgg16.features[12].bias.data
 
-        self.encoder_conv_22.state_dict()['0.weight'] = self.vgg16_weights['features.14.weight']
-        self.encoder_conv_22.state_dict()['0.bias'] = self.vgg16_weights['features.14.bias']
+        self.encoder_conv_22[0].weight.data = self.vgg16.features[14].weight.data
+        self.encoder_conv_22[0].bias.data = self.vgg16.features[14].bias.data
 
-        self.encoder_conv_30.state_dict()['0.weight'] = self.vgg16_weights['features.17.weight']
-        self.encoder_conv_30.state_dict()['0.bias'] = self.vgg16_weights['features.17.bias']
+        self.encoder_conv_30[0].weight.data = self.vgg16.features[17].weight.data
+        self.encoder_conv_30[0].bias.data = self.vgg16.features[17].bias.data
 
-        self.encoder_conv_31.state_dict()['0.weight'] = self.vgg16_weights['features.19.weight']
-        self.encoder_conv_31.state_dict()['0.bias'] = self.vgg16_weights['features.19.bias']
+        self.encoder_conv_31[0].weight.data = self.vgg16.features[19].weight.data
+        self.encoder_conv_31[0].bias.data = self.vgg16.features[19].bias.data
 
-        self.encoder_conv_32.state_dict()['0.weight'] = self.vgg16_weights['features.21.weight']
-        self.encoder_conv_32.state_dict()['0.bias'] = self.vgg16_weights['features.21.bias']
+        self.encoder_conv_32[0].weight.data = self.vgg16.features[21].weight.data
+        self.encoder_conv_32[0].bias.data = self.vgg16.features[21].bias.data
 
-        self.encoder_conv_40.state_dict()['0.weight'] = self.vgg16_weights['features.21.weight']
-        self.encoder_conv_40.state_dict()['0.bias'] = self.vgg16_weights['features.21.bias']
+        self.encoder_conv_40[0].weight.data = self.vgg16.features[21].weight.data
+        self.encoder_conv_40[0].bias.data = self.vgg16.features[21].bias.data
 
-        self.encoder_conv_41.state_dict()['0.weight'] = self.vgg16_weights['features.24.weight']
-        self.encoder_conv_41.state_dict()['0.bias'] = self.vgg16_weights['features.24.bias']
+        self.encoder_conv_41[0].weight.data = self.vgg16.features[24].weight.data
+        self.encoder_conv_41[0].bias.data = self.vgg16.features[24].bias.data
 
-        self.encoder_conv_42.state_dict()['0.weight'] = self.vgg16_weights['features.26.weight']
-        self.encoder_conv_42.state_dict()['0.bias'] = self.vgg16_weights['features.26.bias']
+        self.encoder_conv_42[0].weight.data = self.vgg16.features[26].weight.data
+        self.encoder_conv_42[0].bias.data = self.vgg16.features[26].bias.data
 
