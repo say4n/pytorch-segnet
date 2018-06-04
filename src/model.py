@@ -233,8 +233,11 @@ class SegNet(nn.Module):
                                                ])
 
     
-    def forward(self, input_img):
-        """Forward pass `input_img` through the network"""
+    def forward(self, input_img, class_probs):
+        """
+        Forward pass `input_img` through the network
+        Pixels have `class_probs` probability of belonging to each of the classes
+        """
 
         # Encoder
         
@@ -309,6 +312,8 @@ class SegNet(nn.Module):
         x_0d = F.max_unpool2d(x_10d, indices_0, kernel_size=2, stride=2, output_size=dim_0)
         x_01d = F.relu(self.decoder_convtr_01(x_0d))
         x_00d = self.decoder_convtr_00(x_01d)
+
+        x_00d = x_00d / (class_probs + 1e-9)
 
         x_softmax = F.softmax(x_00d, dim=1)
 

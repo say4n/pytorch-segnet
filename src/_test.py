@@ -19,12 +19,13 @@ if __name__ == "__main__":
     print(model)
 
     img = torch.randn([4, 3, 224, 224])
+    class_probs = torch.randn([4, 3, 224, 224])
     
     # plt.imshow(np.transpose(img.numpy()[0,:,:,:],
     #                         (1, 2, 0)))
     # plt.show()
 
-    output, softmaxed_output = model(img)
+    output, softmaxed_output = model(img, class_probs)
     
 
     # plt.imshow(np.transpose(output.detach().numpy()[0,:,:,:],

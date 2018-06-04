@@ -1,5 +1,6 @@
 """Pascal VOC 2007 Dataset"""
 
+from collections import Counter
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -40,11 +41,12 @@ class PascalVOCDataset(Dataset):
         mask_path = os.path.join(self.mask_root_dir, name + self.mask_extension)
         
         image = self.load_image(path=image_path)
-        gt_mask = self.load_mask(path=mask_path)
+        gt_mask, class_probab = self.load_mask(path=mask_path)
 
         data = {
                     'image_': image,
-                    'mask_' : gt_mask
+                    'mask_' : gt_mask,
+                    'c_prob': class_probab
                     }
 
         if self.transform:
@@ -67,7 +69,9 @@ class PascalVOCDataset(Dataset):
         # remove border
         imx_t[imx_t==255] = 0
 
-        return imx_t
+        c_prob = list(map(lambda item:item[1]/imx_t.size, Counter(imx_t.reshape(-1, imx_t.size).tolist()).items()))
+
+        return imx_t, c_prob
 
 
 if __name__ == "__main__":
