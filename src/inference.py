@@ -79,6 +79,7 @@ def validate():
             a = fig.add_subplot(1,3,2)
             predicted_mx = predicted_mask.detach().cpu().numpy().reshape(NUM_CLASSES, 224, 224)
             predicted_mx = predicted_mx.argmax(axis=0)
+            print(predicted_mx.shape)
             predicted_mx = np.array(Image.fromarray(predicted_mx).convert("RGB"))
             plt.imshow(np.abs(np.transpose(predicted_mx, (1,2,0))))
             a.set_title('Predicted Mask')
