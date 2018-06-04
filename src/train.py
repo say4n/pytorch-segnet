@@ -124,8 +124,9 @@ if __name__ == "__main__":
         model.load_state_dict(torch.load(args.checkpoint))
 
     
-    optimizer = torch.optim.Adam(model.parameters(),
-                                     lr=LEARNING_RATE)
+    optimizer = torch.optim.SGD(model.parameters(),
+                                     lr=LEARNING_RATE,
+                                     momentum=MOMENTUM)
 
     
     train()
