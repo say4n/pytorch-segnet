@@ -46,7 +46,8 @@ class PascalVOCDataset(Dataset):
         data = {
                     'image': image,
                     'mask' : torch.LongTensor(gt_mask),
-                    'c_prob': torch.Tensor(class_probab)
+                    'c_prob': torch.autograd.Variable(torch.Tensor(class_probab),
+                                                      requires_grad=False)
                     }
 
         if self.transform:
