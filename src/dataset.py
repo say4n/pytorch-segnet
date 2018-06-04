@@ -41,13 +41,11 @@ class PascalVOCDataset(Dataset):
         mask_path = os.path.join(self.mask_root_dir, name + self.mask_extension)
         
         image = self.load_image(path=image_path)
-        gt_mask, class_probab = self.load_mask(path=mask_path)
+        gt_mask = self.load_mask(path=mask_path)
 
         data = {
                     'image': image,
-                    'mask' : torch.LongTensor(gt_mask),
-                    'c_prob': torch.autograd.Variable(torch.Tensor(class_probab),
-                                                      requires_grad=False)
+                    'mask' : torch.LongTensor(gt_mask)
                     }
 
         if self.transform:
@@ -69,13 +67,13 @@ class PascalVOCDataset(Dataset):
         # remove border
         imx_t[imx_t==255] = 0
 
-        c = Counter(imx_t.reshape(-1, 224*224).tolist()[0])
-        c_prob = []
+        # c = Counter(imx_t.reshape(-1, 224*224).tolist()[0])
+        # c_prob = []
 
-        for i in range(21):
-            c_prob.append(c[i])
+        # for i in range(21):
+        #     c_prob.append(c[i])
 
-        return imx_t, c_prob
+        return imx_t
 
 
 if __name__ == "__main__":
