@@ -61,14 +61,13 @@ def train():
         
         for batch in train_dataloader:
             input_tensor = torch.autograd.Variable(batch['image'])
-            class_probs = torch.autograd.Variable(batch['c_prob'])
             target_tensor = torch.autograd.Variable(batch['mask'])
 
             if CUDA:
                 input_tensor = input_tensor.cuda(GPU_ID)
                 target_tensor = target_tensor.cuda(GPU_ID)
 
-            predicted_tensor, softmaxed_tensor = model(input_tensor, class_probs)
+            predicted_tensor, softmaxed_tensor = model(input_tensor)
 
             loss = criterion(softmaxed_tensor, target_tensor)
 

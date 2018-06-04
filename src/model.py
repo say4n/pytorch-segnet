@@ -233,10 +233,9 @@ class SegNet(nn.Module):
                                                ])
 
     
-    def forward(self, input_img, class_probs):
+    def forward(self, input_img):
         """
         Forward pass `input_img` through the network
-        Pixels have `class_probs` probability of belonging to each of the classes
         """
 
         # Encoder
