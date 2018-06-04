@@ -313,8 +313,6 @@ class SegNet(nn.Module):
         x_01d = F.relu(self.decoder_convtr_01(x_0d))
         x_00d = self.decoder_convtr_00(x_01d)
 
-        x_00d = x_00d / (class_probs + 1e-9)
-
         x_softmax = F.softmax(x_00d, dim=1)
 
         
