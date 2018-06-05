@@ -44,12 +44,9 @@ class PascalVOCDataset(Dataset):
         gt_mask = self.load_mask(path=mask_path)
 
         data = {
-                    'image': image,
+                    'image': torch.Tensor(image),
                     'mask' : torch.LongTensor(gt_mask)
                     }
-
-        if self.transform:
-            data['image'] = self.transform(data['image'])
 
         return data
 
@@ -83,13 +80,21 @@ if __name__ == "__main__":
     mask_dir = os.path.join(data_root, "SegmentationObject")
 
     
-    objects_dataset = PascalVOCDataset(list_file=list_file_path, img_dir=img_dir, mask_dir=mask_dir)
+    objects_dataset = PascalVOCDataset(list_file=list_file_path,
+                                       img_dir=img_dir,
+                                       mask_dir=mask_dir)
 
     sample = objects_dataset[0]
     image, mask = sample['image'], sample['mask']
 
+
+    fig = plt.figure()
+
+    a = fig.add_subplot(1,2,1)
     plt.imshow(image)
-    plt.show()
+
+    a = fig.add_subplot(1,2,2)
     plt.imshow(mask)
+    
     plt.show()
 

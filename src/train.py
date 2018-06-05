@@ -20,7 +20,6 @@ import os
 import time
 import torch
 from torch.utils.data import DataLoader
-import torchvision.transforms as transforms
 
 
 # Constants
@@ -97,12 +96,10 @@ if __name__ == "__main__":
     CUDA = args.gpu is not None
     GPU_ID = args.gpu
 
-    image_transform = transforms.ToTensor()
 
     train_dataset = PascalVOCDataset(list_file=train_path,
                                      img_dir=img_dir,
-                                     mask_dir=mask_dir,
-                                     transform=image_transform)
+                                     mask_dir=mask_dir)
 
     train_dataloader = DataLoader(train_dataset,
                                   batch_size=BATCH_SIZE,

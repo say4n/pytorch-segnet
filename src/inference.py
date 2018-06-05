@@ -72,12 +72,11 @@ def validate():
             fig = plt.figure()
 
             a = fig.add_subplot(1,3,1)
-            input_imx = input_image.detach().cpu().numpy().reshape(3, 224, 224)
-            plt.imshow(np.abs(np.transpose(input_imx, (1,2,0))))
+            plt.imshow(input_imx)
             a.set_title('Input Image')
             
             a = fig.add_subplot(1,3,2)
-            predicted_mx = predicted_mask.detach().cpu().numpy().reshape(NUM_CLASSES, 224, 224)
+            predicted_mx = predicted_mask.detach().cpu().numpy()
             predicted_mx = predicted_mx.argmax(axis=0)
             plt.imshow(predicted_mx)
             a.set_title('Predicted Mask')
@@ -104,13 +103,11 @@ if __name__ == "__main__":
     CUDA = args.gpu is not None
     GPU_ID = args.gpu
 
-    image_transform = transforms.ToTensor()
 
 
     val_dataset = PascalVOCDataset(list_file=val_path,
                                    img_dir=img_dir,
-                                   mask_dir=mask_dir,
-                                   transform=image_transform)
+                                   mask_dir=mask_dir)
 
     val_dataloader = DataLoader(val_dataset,
                                 batch_size=BATCH_SIZE,
