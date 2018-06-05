@@ -57,7 +57,7 @@ def train():
     for epoch in range(NUM_EPOCHS):
         loss_f = 0
         t_start = time.time()
-        
+
         for batch in train_dataloader:
             input_tensor = torch.autograd.Variable(batch['image'])
             target_tensor = torch.autograd.Variable(batch['mask'])
@@ -68,15 +68,16 @@ def train():
 
             predicted_tensor, softmaxed_tensor = model(input_tensor)
 
-            loss = criterion(softmaxed_tensor, target_tensor)
 
             optimizer.zero_grad()
+            loss = criterion(softmaxed_tensor, target_tensor)
             loss.backward()
             optimizer.step()
 
+
             loss_f += loss.float()
             prediction_f = softmaxed_tensor.float()
-            
+
         delta = time.time() - t_start
         is_better = loss_f < prev_loss
 
@@ -88,7 +89,7 @@ def train():
 
 
 if __name__ == "__main__":
-    data_root = args.data_root 
+    data_root = args.data_root
     train_path = os.path.join(data_root, args.train_path)
     img_dir = os.path.join(data_root, args.img_dir)
     mask_dir = os.path.join(data_root, args.mask_dir)
@@ -103,7 +104,7 @@ if __name__ == "__main__":
 
     train_dataloader = DataLoader(train_dataset,
                                   batch_size=BATCH_SIZE,
-                                  shuffle=True, 
+                                  shuffle=True,
                                   num_workers=4)
 
 
@@ -116,14 +117,14 @@ if __name__ == "__main__":
                        output_channels=NUM_OUTPUT_CHANNELS)
         criterion = torch.nn.CrossEntropyLoss()
 
-    
+
     if args.checkpoint:
         model.load_state_dict(torch.load(args.checkpoint))
 
-    
+
     optimizer = torch.optim.SGD(model.parameters(),
                                      lr=LEARNING_RATE,
                                      momentum=MOMENTUM)
 
-    
+
     train()
