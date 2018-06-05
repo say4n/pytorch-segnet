@@ -52,7 +52,7 @@ class PascalVOCDataset(Dataset):
 
     def load_image(self, path=None):
         raw_image = Image.open(path)
-        raw_image = np.transpose(raw_image.resize((224, 224)), (1,2,0))
+        raw_image = np.transpose(raw_image.resize((224, 224)), (2,1,0))
         imx_t = np.array(raw_image, dtype=np.float32)/255.0
 
         return imx_t
