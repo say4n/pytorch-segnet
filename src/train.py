@@ -75,7 +75,10 @@ def train():
 
             # DEBUG_BEGIN
             for param in model.parameters():
-                print(param.grad.data.sum())
+                try:
+                    print(param.grad.data.sum())
+                except AttributeError:
+                    pass
 
             import pdb; pdb.set_trace()
             # DEBUG_END
