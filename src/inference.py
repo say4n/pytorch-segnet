@@ -72,7 +72,7 @@ def validate():
             fig = plt.figure()
 
             a = fig.add_subplot(1,3,1)
-            plt.imshow(input_imx)
+            plt.imshow(input_image)
             a.set_title('Input Image')
             
             a = fig.add_subplot(1,3,2)
