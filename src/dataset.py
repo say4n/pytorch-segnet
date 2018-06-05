@@ -16,7 +16,7 @@ VOC_CLASSES = ('background',  # always index 0
                'motorbike', 'person', 'pottedplant',
                'sheep', 'sofa', 'train', 'tvmonitor')
 
-NUM_CLASSES = len(VOC_CLASSES)
+NUM_CLASSES = len(VOC_CLASSES) + 1
 
 
 
@@ -61,8 +61,8 @@ class PascalVOCDataset(Dataset):
         raw_image = Image.open(path)
         raw_image = raw_image.resize((224, 224))
         imx_t = np.array(raw_image)
-        # remove border
-        imx_t[imx_t==255] = 0
+        # border
+        imx_t[imx_t==255] = len(VOC_CLASSES)
 
         return imx_t
 
