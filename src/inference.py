@@ -74,7 +74,7 @@ def validate():
             a = fig.add_subplot(1,3,1)
             plt.imshow(input_image.transpose(0, 2))
             a.set_title('Input Image')
-            
+
             a = fig.add_subplot(1,3,2)
             predicted_mx = predicted_mask.detach().cpu().numpy()
             predicted_mx = predicted_mx.argmax(axis=0)
@@ -124,7 +124,7 @@ if __name__ == "__main__":
                        output_channels=NUM_OUTPUT_CHANNELS)
         criterion = torch.nn.CrossEntropyLoss()
 
-    
+
     model.load_state_dict(torch.load(SAVED_MODEL_PATH))
 
 
