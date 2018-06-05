@@ -122,9 +122,8 @@ if __name__ == "__main__":
         model.load_state_dict(torch.load(args.checkpoint))
 
 
-    optimizer = torch.optim.SGD(model.parameters(),
-                                     lr=LEARNING_RATE,
-                                     momentum=MOMENTUM)
+    optimizer = torch.optim.RMSprop(model.parameters(),
+                                     lr=LEARNING_RATE)
 
 
     train()
