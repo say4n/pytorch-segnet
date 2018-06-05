@@ -304,12 +304,12 @@ class SegNet(nn.Module):
         
         # Decoder Stage - 2
         x_1d = F.max_unpool2d(x_20d, indices_1, kernel_size=2, stride=2, output_size=dim_1)
-        x_11d = self.decoder_convtr_11(x_1d)
-        x_10d = self.decoder_convtr_10(x_11d)
+        x_11d = F.relu(self.decoder_convtr_11(x_1d))
+        x_10d = F.relu(self.decoder_convtr_10(x_11d))
         
         # Decoder Stage - 1
         x_0d = F.max_unpool2d(x_10d, indices_0, kernel_size=2, stride=2, output_size=dim_0)
-        x_01d = self.decoder_convtr_01(x_0d)
+        x_01d = F.relu(self.decoder_convtr_01(x_0d))
         x_00d = self.decoder_convtr_00(x_01d)
 
         x_softmax = F.softmax(x_00d, dim=1)
