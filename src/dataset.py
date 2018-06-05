@@ -52,7 +52,7 @@ class PascalVOCDataset(Dataset):
 
     def load_image(self, path=None):
         raw_image = Image.open(path)
-        raw_image = raw_image.resize((224, 224))
+        raw_image = np.transpose(raw_image.resize((224, 224)), (1,2,0))
         imx_t = np.array(raw_image, dtype=np.float32)/255.0
 
         return imx_t
@@ -63,12 +63,6 @@ class PascalVOCDataset(Dataset):
         imx_t = np.array(raw_image)
         # remove border
         imx_t[imx_t==255] = 0
-
-        # c = Counter(imx_t.reshape(-1, 224*224).tolist()[0])
-        # c_prob = []
-
-        # for i in range(21):
-        #     c_prob.append(c[i])
 
         return imx_t
 
