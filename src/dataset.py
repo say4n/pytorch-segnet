@@ -39,12 +39,12 @@ class PascalVOCDataset(Dataset):
         name = self.images[index]
         image_path = os.path.join(self.image_root_dir, name + self.img_extension)
         mask_path = os.path.join(self.mask_root_dir, name + self.mask_extension)
-        
+
         image = self.load_image(path=image_path)
         gt_mask = self.load_mask(path=mask_path)
 
         data = {
-                    'image': torch.Tensor(image),
+                    'image': torch.FloatTensor(image),
                     'mask' : torch.LongTensor(gt_mask)
                     }
 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     img_dir = os.path.join(data_root, "JPEGImages")
     mask_dir = os.path.join(data_root, "SegmentationObject")
 
-    
+
     objects_dataset = PascalVOCDataset(list_file=list_file_path,
                                        img_dir=img_dir,
                                        mask_dir=mask_dir)
@@ -90,6 +90,6 @@ if __name__ == "__main__":
 
     a = fig.add_subplot(1,2,2)
     plt.imshow(mask)
-    
+
     plt.show()
 
