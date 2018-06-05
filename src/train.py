@@ -122,7 +122,7 @@ if __name__ == "__main__":
         model.load_state_dict(torch.load(args.checkpoint))
 
 
-    optimizer = torch.optim.RMSProp(model.parameters(),
+    optimizer = torch.optim.RMSprop(model.parameters(),
                                      lr=LEARNING_RATE)
 
 
