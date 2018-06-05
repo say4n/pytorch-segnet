@@ -28,7 +28,7 @@ NUM_OUTPUT_CHANNELS = NUM_CLASSES
 
 NUM_EPOCHS = 6000
 
-LEARNING_RATE = 1e-5
+LEARNING_RATE = 1e-8
 MOMENTUM = 0.9
 BATCH_SIZE = 16
 
@@ -122,8 +122,9 @@ if __name__ == "__main__":
         model.load_state_dict(torch.load(args.checkpoint))
 
 
-    optimizer = torch.optim.RMSprop(model.parameters(),
-                                     lr=LEARNING_RATE)
+    optimizer = torch.optim.SGD(model.parameters(),
+                                     lr=LEARNING_RATE,
+                                     momentum=MOMENTUM)
 
 
     train()
