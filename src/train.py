@@ -28,7 +28,7 @@ NUM_OUTPUT_CHANNELS = NUM_CLASSES
 
 NUM_EPOCHS = 6000
 
-LEARNING_RATE = 0.1
+LEARNING_RATE = 1e-5
 MOMENTUM = 0.9
 BATCH_SIZE = 16
 
@@ -72,17 +72,6 @@ def train():
             optimizer.zero_grad()
             loss = criterion(softmaxed_tensor, target_tensor)
             loss.backward()
-
-            # DEBUG_BEGIN
-            for param in model.parameters():
-                try:
-                    print(param.grad.data.sum())
-                except AttributeError:
-                    pass
-
-            import pdb; pdb.set_trace()
-            # DEBUG_END
-
             optimizer.step()
 
 
