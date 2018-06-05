@@ -66,7 +66,6 @@ def train():
                 input_tensor = input_tensor.cuda(GPU_ID)
                 target_tensor = target_tensor.cuda(GPU_ID)
 
-            print(input_tensor.size(), target_tensor.size())
             predicted_tensor, softmaxed_tensor = model(input_tensor)
 
             loss = criterion(softmaxed_tensor, target_tensor)
