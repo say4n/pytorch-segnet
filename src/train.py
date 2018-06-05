@@ -72,6 +72,14 @@ def train():
             optimizer.zero_grad()
             loss = criterion(softmaxed_tensor, target_tensor)
             loss.backward()
+
+            # DEBUG_BEGIN
+            for param in model.parameters():
+                print(param.grad.data.sum())
+
+            import pdb; pdb.set_trace()
+            # DEBUG_END
+
             optimizer.step()
 
 
