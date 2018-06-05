@@ -81,6 +81,7 @@ if __name__ == "__main__":
     sample = objects_dataset[0]
     image, mask = sample['image'], sample['mask']
 
+    image.transpose_(0, 2)
 
     fig = plt.figure()
 
