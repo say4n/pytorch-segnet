@@ -3,12 +3,12 @@ Train a SegNet model
 
 
 Usage:
-python train.py --data_root /home/SharedData/intern_sayan/PascalVOC/data/VOCdevkit/VOC2007/ \
+python train.py --data_root /home/SharedData/intern_sayan/PascalVOC2012/data/VOCdevkit/VOC2012/ \
                 --train_path ImageSets/Segmentation/train.txt \
                 --img_dir JPEGImages \
                 --mask_dir SegmentationClass \
-                --save_dir /home/SharedData/intern_sayan/PascalVOC/ \
-                --checkpoint /home/SharedData/intern_sayan/PascalVOC/model_best.pth \
+                --save_dir /home/SharedData/intern_sayan/PascalVOC2012/ \
+                --checkpoint /home/SharedData/intern_sayan/PascalVOC2012/model_best.pth \
                 --gpu 1
 """
 
