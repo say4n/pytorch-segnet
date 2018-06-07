@@ -1,4 +1,4 @@
-"""Pascal VOC 2007 Dataset"""
+"""Pascal VOC Dataset Segmentation Dataloader"""
 
 from collections import Counter
 import matplotlib.pyplot as plt
@@ -6,6 +6,7 @@ import numpy as np
 import os
 import torch
 from torch.utils.data import Dataset
+from tqdm import tqdm
 from PIL import Image
 
 
@@ -32,6 +33,8 @@ class PascalVOCDataset(Dataset):
         self.image_root_dir = img_dir
         self.mask_root_dir = mask_dir
 
+        self.counts = self.__compute_class_probability()
+
     def __len__(self):
         return len(self.images)
 
@@ -49,6 +52,27 @@ class PascalVOCDataset(Dataset):
                     }
 
         return data
+
+    def __compute_class_probability(self):
+        counts = dict((i, 0) for i in range(NUM_CLASSES))
+
+        for name in self.images:
+            mask_path = os.path.join(self.mask_root_dir, name + self.mask_extension)
+
+            raw_image = Image.open(mask_path).resize((224, 224))
+            imx_t = np.array(raw_image).reshape(224*224)
+            imx_t[imx_t==255] = len(VOC_CLASSES)
+
+            for i in range(NUM_CLASSES):
+                counts[i] += np.sum(imx_t == i)
+
+        return counts
+
+    def get_class_probability(self):
+        values = np.array(list(self.counts.values()))
+        p_values = values/np.sum(values)
+
+        return torch.Tensor(p_values)
 
     def load_image(self, path=None):
         raw_image = Image.open(path)
@@ -77,6 +101,8 @@ if __name__ == "__main__":
     objects_dataset = PascalVOCDataset(list_file=list_file_path,
                                        img_dir=img_dir,
                                        mask_dir=mask_dir)
+
+    print(objects_dataset.get_class_probability())
 
     sample = objects_dataset[0]
     image, mask = sample['image'], sample['mask']
