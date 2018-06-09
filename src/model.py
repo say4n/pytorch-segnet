@@ -272,46 +272,59 @@ class SegNet(nn.Module):
         x_42 = F.relu(self.encoder_conv_42(x_41))
         x_4, indices_4 = F.max_pool2d(x_42, kernel_size=2, stride=2, return_indices=True)
 
-
-        if DEBUG:
-            print("dim_0: {}, indices_0: {}".format(dim_0, indices_0.size()))
-            print("dim_1: {}, indices_1: {}".format(dim_1, indices_1.size()))
-            print("dim_2: {}, indices_2: {}".format(dim_2, indices_2.size()))
-            print("dim_3: {}, indices_3: {}".format(dim_3, indices_3.size()))
-            print("dim_4: {}, indices_4: {}".format(dim_4, indices_4.size()))
-
-
         # Decoder
+
+        dim_d = x_4.size()
 
         # Decoder Stage - 5
         x_4d = F.max_unpool2d(x_4, indices_4, kernel_size=2, stride=2, output_size=dim_4)
         x_42d = F.relu(self.decoder_convtr_42(x_4d))
         x_41d = F.relu(self.decoder_convtr_41(x_42d))
         x_40d = F.relu(self.decoder_convtr_40(x_41d))
+        dim_4d = x_40d.size()
 
         # Decoder Stage - 4
         x_3d = F.max_unpool2d(x_40d, indices_3, kernel_size=2, stride=2, output_size=dim_3)
         x_32d = F.relu(self.decoder_convtr_32(x_3d))
         x_31d = F.relu(self.decoder_convtr_31(x_32d))
         x_30d = F.relu(self.decoder_convtr_30(x_31d))
+        dim_3d = x_30d.size()
 
         # Decoder Stage - 3
         x_2d = F.max_unpool2d(x_30d, indices_2, kernel_size=2, stride=2, output_size=dim_2)
         x_22d = F.relu(self.decoder_convtr_22(x_2d))
         x_21d = F.relu(self.decoder_convtr_21(x_22d))
         x_20d = F.relu(self.decoder_convtr_20(x_21d))
+        dim_2d = x_20d.size()
 
         # Decoder Stage - 2
         x_1d = F.max_unpool2d(x_20d, indices_1, kernel_size=2, stride=2, output_size=dim_1)
         x_11d = F.relu(self.decoder_convtr_11(x_1d))
         x_10d = F.relu(self.decoder_convtr_10(x_11d))
+        dim_1d = x_10d.size()
 
         # Decoder Stage - 1
         x_0d = F.max_unpool2d(x_10d, indices_0, kernel_size=2, stride=2, output_size=dim_0)
         x_01d = F.relu(self.decoder_convtr_01(x_0d))
         x_00d = self.decoder_convtr_00(x_01d)
+        dim_0d = x_00d.size()
 
         x_softmax = F.softmax(x_00d, dim=1)
+
+
+        if DEBUG:
+            print("dim_0: {}".format(dim_0))
+            print("dim_1: {}".format(dim_1))
+            print("dim_2: {}".format(dim_2))
+            print("dim_3: {}".format(dim_3))
+            print("dim_4: {}".format(dim_4))
+
+            print("dim_d: {}".format(dim_d))
+            print("dim_4d: {}".format(dim_4d))
+            print("dim_3d: {}".format(dim_3d))
+            print("dim_2d: {}".format(dim_2d))
+            print("dim_1d: {}".format(dim_1d))
+            print("dim_0d: {}".format(dim_0d))
 
 
         return x_00d, x_softmax
